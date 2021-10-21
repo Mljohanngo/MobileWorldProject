@@ -19,7 +19,7 @@ namespace Entities
         public string AdPartnerName { get; set; }
         public int HttpResponseCode { get; set; }
         public string ResponseMessage { get; set; }
-        public string OpSubscriptionId { get; set; }
+        public long OpSubscriptionId { get; set; }
 
     }
 }
