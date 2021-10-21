@@ -8,6 +8,7 @@ namespace Entities
 {
    public class MWSendPin : Base
    {
+        public long SubscriptionId { get; set; }
         public string Action { get; set; }
         public string Msisdn { get; set; }
         public string ProductId { get; set; }
@@ -20,6 +21,9 @@ namespace Entities
         public int HttpResponseCode { get; set; }
         public string ResponseMessage { get; set; }
         public long OpSubscriptionId { get; set; }
+        public int ResponseCode { get; set; }
+        public string TrxID { get; set; }
+        public string ErrorMessage { get; set; }
 
     }
 }
