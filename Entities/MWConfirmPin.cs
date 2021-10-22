@@ -8,6 +8,7 @@ namespace Entities
 {
    public class MWConfirmPin
    {
+        public long SubscriptionId { get; set; }
         public string Action { get; set; }
         public string Msisdn { get; set; }
         public string OpSubscriptionId { get; set; }
