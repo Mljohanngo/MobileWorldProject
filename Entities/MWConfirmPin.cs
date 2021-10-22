@@ -23,7 +23,7 @@ namespace Entities
         public string ResponseMessage { get; set; }
         public int ResponseCode { get; set; }
         public string TrxID { get; set; }
-        public string ErrorMessage { get; set; }
+        public string ResultMessage { get; set; }
         public int PaymentStatus { get; set; }
 
 

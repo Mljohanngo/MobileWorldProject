@@ -15,6 +15,6 @@ namespace Entities
         public int HttpResponseCode { get; set; }
         public string ResponseMessage { get; set; }
         public int ResponseCode { get; set; }
-        public string ErrorMessage { get; set; }
+        public string ResultMessage { get; set; }
     }
 }
