@@ -13,16 +13,19 @@ namespace MWProxy
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        public MWService(HttpClient client, IConfiguration configuration)
+        public MWService(HttpClient client, IConfiguration configuration) 
         {
-            client.BaseAddress = new Uri(_configuration.GetValue<string>("MWConfig:HTTP:BaseUrl"));
-            var headerValue = $"{_configuration.GetValue<string>("MWConfig:Credentials:UserName")}:{_configuration.GetValue<string>("MWConfig:Credentials:PassWord")}";
-            client.DefaultRequestHeaders.Add($"{_configuration.GetValue<string>("MWConfig:HTTP:Header")}", 
+            client.BaseAddress = new Uri(configuration.GetValue<string>("MWConfig:HTTP:BaseUrl"));
+            var headerValue = $"{configuration.GetValue<string>("MWConfig:Credentials:UserName")}:{configuration.GetValue<string>("MWConfig:Credentials:PassWord")}";
+            client.DefaultRequestHeaders.Add(
+                $"{configuration.GetValue<string>("MWConfig:HTTP:Header")}",
                 $"{Convert.ToBase64String(Encoding.ASCII.GetBytes(headerValue))}");
+
             _httpClient = client;
+            _configuration = configuration;
         }
 
-        public async Task<SendPinRequestDto> SendPinAsync(SendPinRequestDto Request, string config)
+        public async Task<SendPinRequestDto> SendPinAsync(SendPinRequestDto Request)
         {
 
             var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test"});

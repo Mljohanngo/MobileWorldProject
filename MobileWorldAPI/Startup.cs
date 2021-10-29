@@ -11,6 +11,7 @@ using MWProxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MobileWorldAPI
@@ -34,6 +35,7 @@ namespace MobileWorldAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MobileWorldAPI", Version = "v1" });
             });
+            // Inyect Mobile World Http Client 
             services.AddHttpClient<MWService>();
         }
 
