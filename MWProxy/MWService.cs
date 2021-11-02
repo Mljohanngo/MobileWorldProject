@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json.Serialization;
+
+using DTO.MW;
+using System.Text.Json;
 
 namespace MWProxy
 {
@@ -27,41 +31,84 @@ namespace MWProxy
             _configuration = configuration;
         }
 
-        public async Task<SendPinRequestDto> SendPinAsync(SendPinRequestDto Request)
+        public async Task<SendPinResponseDto> SendPinAsync(SendPinRequestDto Request)
         {
 
-            var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test"});
-            return null;
+            var result = await _httpClient.PostAsJsonAsync("request", Request);
+
+            if (!result.IsSuccessStatusCode)
+            {
+               // Exception Logic Here
+            }
+
+            var payload = await result.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<SendPinResponseDto>(payload);
+            return response;
         }
 
-        public async Task<ReSendPinResponseDto> ReSendPinAsync(ReSendPinRequestDto Request)
+        public async Task<ResendPinResponseDto> ReSendPinAsync(ResendPinRequestDto Request)
         {
-            var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test" });
-            return null;
+            var result = await _httpClient.PostAsJsonAsync("request", Request);
+
+            if (!result.IsSuccessStatusCode)
+            {
+               // Exception Logic Here
+            }
+            var payload = await result.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<ResendPinResponseDto>(payload);
+            return response;
         }
 
         public async Task<ConfirmPinResponseDto> ConfirmPinAsync(ConfirmPinRequestDto Request)
         {
-            var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test" });
-            return null;
+            var result = await _httpClient.PostAsJsonAsync("request", Request);
+
+            if (!result.IsSuccessStatusCode)
+            {
+               // Exception Logic Here
+            }
+            var payload = await result.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<ConfirmPinResponseDto>(payload);
+            return response;
         }
 
         public async Task<CheckSubscriptionResponseDto> CheckSubscriptionAsync(CheckSubscriptionRequestDto Request)
         {
-            var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test" });
-            return null;
+            var result = await _httpClient.PostAsJsonAsync("request", Request);
+
+            if (!result.IsSuccessStatusCode)
+            {
+               // Exception Logic Here
+            }
+            var payload = await result.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<CheckSubscriptionResponseDto>(payload);
+            return response;
         }
 
         public async Task<CancelSubscriptionResponseDto> CancelSubscriptionAsync(CancelSubscriptionRequestDto Request)
         {
-            var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test" });
-            return null;
+            var result = await _httpClient.PostAsJsonAsync("request", Request);
+
+            if (!result.IsSuccessStatusCode)
+            {
+               // Exception Logic Here
+            }
+            var payload = await result.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<CancelSubscriptionResponseDto>(payload);
+            return response;
         }
 
         public async Task<SendFreeMTResponseDto> SendFreeMTAsync(SendFreeMTRequestDto Request)
         {
-            var client = await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress, new { test = "test" });
-            return null;
+            var result = await _httpClient.PostAsJsonAsync("request", Request);
+
+            if (!result.IsSuccessStatusCode)
+            {
+               // Exception Logic Here
+            }
+            var payload = await result.Content.ReadAsStringAsync();
+            var response = JsonSerializer.Deserialize<SendFreeMTResponseDto>(payload);
+            return response;
         }
     }
 }
