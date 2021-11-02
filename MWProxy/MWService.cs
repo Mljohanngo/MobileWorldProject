@@ -16,10 +16,12 @@ namespace MWProxy
         public MWService(HttpClient client, IConfiguration configuration) 
         {
             client.BaseAddress = new Uri(configuration.GetValue<string>("MWConfig:HTTP:BaseUrl"));
-            var headerValue = $"{configuration.GetValue<string>("MWConfig:Credentials:UserName")}:{configuration.GetValue<string>("MWConfig:Credentials:PassWord")}";
+            var headerValue = $"" +
+                              $"{configuration.GetValue<string>("MWConfig:Credentials:UserName")}" +
+                              $":{configuration.GetValue<string>("MWConfig:Credentials:PassWord")}";
             client.DefaultRequestHeaders.Add(
-                $"{configuration.GetValue<string>("MWConfig:HTTP:Header")}",
-                $"{Convert.ToBase64String(Encoding.ASCII.GetBytes(headerValue))}");
+                              $"{configuration.GetValue<string>("MWConfig:HTTP:Header")}",
+                              $"{Convert.ToBase64String(Encoding.ASCII.GetBytes(headerValue))}");
 
             _httpClient = client;
             _configuration = configuration;
