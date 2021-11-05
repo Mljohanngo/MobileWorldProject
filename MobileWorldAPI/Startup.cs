@@ -37,6 +37,8 @@ namespace MobileWorldAPI
             });
             // Inyect Mobile World Http Client 
             services.AddHttpClient<MWService>();
+            services.AddRazorPages()
+                .AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +60,7 @@ namespace MobileWorldAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }
