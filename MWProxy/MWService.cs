@@ -23,9 +23,8 @@ namespace MWProxy
             var headerValue = $"" +
                               $"{configuration.GetValue<string>("MWConfig:Credentials:UserName")}" +
                               $":{configuration.GetValue<string>("MWConfig:Credentials:PassWord")}";
-            client.DefaultRequestHeaders.Add(
-                              $"{configuration.GetValue<string>("MWConfig:HTTP:Header")}",
-                              $"{Convert.ToBase64String(Encoding.ASCII.GetBytes(headerValue))}");
+            var headerBase64 = Convert.ToBase64String(Encoding.ASCII.GetBytes(headerValue));
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", headerBase64);
 
             _httpClient = client;
             _configuration = configuration;
@@ -38,7 +37,7 @@ namespace MWProxy
 
             if (!result.IsSuccessStatusCode)
             {
-               // Exception Logic Here
+                throw new Exception($"Error , code {result.StatusCode}");
             }
 
             var payload = await result.Content.ReadAsStringAsync();
@@ -52,7 +51,7 @@ namespace MWProxy
 
             if (!result.IsSuccessStatusCode)
             {
-               // Exception Logic Here
+                throw new Exception($"Error , code {result.StatusCode}");
             }
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<ResendPinResponseDto>(payload);
@@ -65,7 +64,7 @@ namespace MWProxy
 
             if (!result.IsSuccessStatusCode)
             {
-               // Exception Logic Here
+                throw new Exception($"Error , code {result.StatusCode}");
             }
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<ConfirmPinResponseDto>(payload);
@@ -78,7 +77,7 @@ namespace MWProxy
 
             if (!result.IsSuccessStatusCode)
             {
-               // Exception Logic Here
+                throw new Exception($"Error , code {result.StatusCode}");
             }
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<CheckSubscriptionResponseDto>(payload);
@@ -91,7 +90,7 @@ namespace MWProxy
 
             if (!result.IsSuccessStatusCode)
             {
-               // Exception Logic Here
+                throw new Exception($"Error , code {result.StatusCode}");
             }
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<CancelSubscriptionResponseDto>(payload);
@@ -104,7 +103,7 @@ namespace MWProxy
 
             if (!result.IsSuccessStatusCode)
             {
-               // Exception Logic Here
+                throw new Exception($"Error , code {result.StatusCode}");
             }
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<SendFreeMTResponseDto>(payload);
