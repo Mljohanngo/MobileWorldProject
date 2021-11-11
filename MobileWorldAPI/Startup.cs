@@ -52,6 +52,7 @@ namespace MobileWorldAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
