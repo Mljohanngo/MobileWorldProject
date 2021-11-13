@@ -22,9 +22,26 @@ namespace MobileWorldAPI.Pages
         [BindProperty]
         [Required(ErrorMessage = "Msisdn is required")]
         public long Msisdn { get; set; }
-        public void OnGet()
+        public string BaseImg { get; set; }
+        public IActionResult OnGet([FromRoute] int id = 0)
         {
+            switch (id)
+            {
+                case 1:
+                    BaseImg = "img/landing1.png";
+                    break;
+                case 2:
+                    BaseImg = "img/landing2.png";
+                    break;
+                case 3:
+                    BaseImg = "img/landing3.png";
+                    break;
+                default:
+                    BaseImg = "img/landing1.png";
+                    break;
+            }
             clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()

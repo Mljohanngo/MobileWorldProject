@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model MobileWorldAPI.Pages.IndexModel
 @{
 
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
             <div class="cuerpo">
-                <img src="img/landing1.png" style="width: 85%;">
+                <img src="@Model.BaseImg" style="width: 65%;">
                 <h2 ID="h2Number">Enter your number</h2>
                 <p class="sms">Free trial for 24 hours then AED 11 subscription per week</p>
                 <p class="sms">Click "Subscribe" to confirm your number</p>
