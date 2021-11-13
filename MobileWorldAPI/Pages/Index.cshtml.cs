@@ -45,7 +45,7 @@ namespace MobileWorldAPI.Pages
                 });
                 return RedirectToPage("Pin", sendPINResponse);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Page();
             }

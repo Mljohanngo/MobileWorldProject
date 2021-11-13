@@ -64,6 +64,10 @@ namespace MWProxy
 
         public async Task<ConfirmPinResponseDto> ConfirmPinAsync(ConfirmPinRequestDto Request)
         {
+            Request.Action = _configuration.GetValue<string>("Method:ConfirmPin:Action");
+            Request.PinCode = _configuration.GetValue<string>("MWConfig:Credentials:PinCode");
+            Request.ProductId = _configuration.GetValue<string>("MWConfig:Credentials:ProductId");
+            Request.PubId = _configuration.GetValue<string>("MWConfig:Credentials:PubId");
             var result = await _httpClient.PostAsJsonAsync("request", Request);
 
             if (!result.IsSuccessStatusCode)
