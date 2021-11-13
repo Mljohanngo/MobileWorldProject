@@ -51,6 +51,7 @@ namespace MobileWorldAPI.Pages
                     TransactionId = SendPinResponseDto.TransactionId,
                     SourceIp = clientIpAddress,
                     Channel = "web",
+                    PinCode = Otp.ToString(),
                     AdPartnerName = "MLCampaign"
                 });
 
