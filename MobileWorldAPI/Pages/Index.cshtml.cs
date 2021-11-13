@@ -38,7 +38,7 @@ namespace MobileWorldAPI.Pages
 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
-                    Msisdn = Msisdn.ToString(),
+                    Msisdn = $"971{Msisdn}",
                     SourceIp = clientIpAddress,
                     Channel = "web",
                     AdPartnerName = "MLCampaign"
