@@ -32,7 +32,11 @@ namespace MWProxy
 
         public async Task<SendPinResponseDto> SendPinAsync(SendPinRequestDto Request)
         {
-
+            Request.Action = _configuration.GetValue<string>("Method:SendPin:Action");
+            Request.ProductId = _configuration.GetValue<string>("MWConfig:Credentials:ProductId");
+            Request.Language = _configuration.GetValue<string>("MWConfig:Credentials:Language");
+            Request.ClientCorrelator = Guid.NewGuid().ToString();
+            Request.PubId = _configuration.GetValue<string>("MWConfig:Credentials:PubId");
             var result = await _httpClient.PostAsJsonAsync("request", Request);
 
             if (!result.IsSuccessStatusCode)
