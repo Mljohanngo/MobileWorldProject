@@ -5,7 +5,7 @@
     "framework"     : "net5.0",
     "self-contained" : false,
     "application"    : "MobileWorldAPI",
-    "environment"    : "MobileWorldAPI-prod",
+    "environment"    : "MobileWorldAPI-dev",
     "enable-xray"    : false,
     "enhanced-health-type" : "basic",
     "additional-options"   : "",
