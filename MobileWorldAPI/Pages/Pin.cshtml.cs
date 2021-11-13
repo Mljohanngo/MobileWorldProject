@@ -13,7 +13,6 @@ namespace MobileWorldAPI.Pages
     public class PinModel : PageModel
     {
         private readonly MWService _mWService;
-        private SendPinResponseDto _sendPinResponseDto;
         private string clientIpAddress;
         public PinModel(MWService mWService)
         {
@@ -21,12 +20,20 @@ namespace MobileWorldAPI.Pages
         }
 
         [BindProperty]
+        [Required(ErrorMessage = "PinResponse is required")]
+        public SendPinResponseDto SendPinResponseDto { get; set; }
+        [BindProperty]
         [Required(ErrorMessage = "OTP is required")]
         public long Otp { get; set; }
-        public void OnGet(SendPinResponseDto passedData)
+        public IActionResult OnGet(SendPinResponseDto passedData)
         {
             clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
-            _sendPinResponseDto = passedData;
+            if (passedData is null || !ModelState.IsValid)
+            {
+                return RedirectToPage("Index");
+            }
+            SendPinResponseDto = passedData;
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()
@@ -39,9 +46,9 @@ namespace MobileWorldAPI.Pages
             {
                 var confirmPINResponse = await _mWService.ConfirmPinAsync(new DTO.MW.ConfirmPinRequestDto
                 {
-                    Msisdn = _sendPinResponseDto.Msisdn,
-                    SubscriptionId = _sendPinResponseDto.SubscriptionId,
-                    TransactionId = _sendPinResponseDto.TransactionId,
+                    Msisdn = SendPinResponseDto.Msisdn,
+                    SubscriptionId = SendPinResponseDto.SubscriptionId,
+                    TransactionId = SendPinResponseDto.TransactionId,
                     SourceIp = clientIpAddress,
                     Channel = "web",
                     AdPartnerName = "MLCampaign"
@@ -52,7 +59,7 @@ namespace MobileWorldAPI.Pages
             {
                 return Page();
             }
-            return Redirect("/Pin");
+            return RedirectToPage("Welcome");
         }
     }
 }
