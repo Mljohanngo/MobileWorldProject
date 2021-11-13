@@ -1,0 +1,72 @@
+﻿@page
+@model MobileWorldAPI.Pages.PinModel
+@{
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
+            <div class="cuerpo">
+                <img src="img/landing1.png" style="width: 85%;">
+                <h2 ID="h2Number">Please enter the PIN you received to activate your subscripton</h2>
+                <p class="sms">Free trial for 24 hours then AED 11 subscription per week</p>
+                <form method="post">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div id="inputnumber" class="form-group row">
+                        <div class="col-6 offset-3">
+                            <input asp-for="Otp" value="" class="form-control" placeholder="Enter your OTP" />
+                            <span asp-validation-for="Otp"></span>
+                            <p class="sms">Click "Subscribe" to confirm your Subscription</p>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-3 offset-2">
+                            <input style="display:inline-block;" type="submit" value="" class="login login-submit form-control" />
+                        </div>
+                    </div>
+                </form>
+
+                <div id="inputnumber">
+                    <p class="sms" style="font-weight: bold; font-size: 18px;">
+                    </p>
+                </div>
+                <div class="bot">
+                </div>
+                <button onclick="goBack()">Exit</button>
+
+
+                <p class="sms" style="font-weight: bold; font-size: 10px;">Terms and conditions</p>
+
+                <p class="sms" style="font-weight: bold; font-size: 8px;">
+                    By clicking on the above subscribe button, you will agree on the below terms and conditions<br>
+                    1. You will be start the paid subscription after the free period automatically<br>
+                    2. No commitment, you can cancel your subscription at anytime by sending STOP to 3333<br>
+                    3. To get support, please contact info@digi-vibe.com <br>
+                    4. The free trial is valid only for new subscribers
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function OnSelect() {
+            var o = $("#seloper").val();
+            if (o == 5000) {
+                $("#h2Number").hide();
+                $("#inputnumber").hide();
+                $("#msisdnTXT").prop('required', false);
+
+            }
+            else {
+                $("#h2Number").show();
+                $("#inputnumber").show();
+                $("#msisdnTXT").prop('required', true);
+            }
+        }
+    </script>
+}
