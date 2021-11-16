@@ -10,11 +10,11 @@ using MWProxy;
 namespace MobileWorldAPI.Pages
 {
     
-    public class IndexModel : PageModel
+    public class IndexModelAr : PageModel
     {
         private readonly MWService _mWService;
         private string clientIpAddress;
-        public IndexModel(MWService mWService)
+        public IndexModelAr(MWService mWService)
         {
             _mWService = mWService;
         }
