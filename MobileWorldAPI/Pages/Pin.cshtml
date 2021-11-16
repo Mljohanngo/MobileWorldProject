@@ -8,9 +8,10 @@
     <div class="row">
         <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
             <div class="cuerpo">
-                <img src="img/landing1.png" style="width: 65%;">
-                <h2 ID="h2Number">Please enter the PIN you received to activate your subscripton</h2>
                 <p class="sms">Free for 24 hrs then AED 11 / Week</p>
+                <img src="img/landing1.png" style="width: 50%;">
+                <h2 ID="h2Number">Please enter the PIN you received to activate your subscripton</h2>
+
                 <form method="post">
                     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                     <div id="inputnumber" class="form-group row">
@@ -19,7 +20,7 @@
                             <span asp-validation-for="Otp"></span>
                             <p class="sms">Click "Subscribe" to confirm your Subscription</p>
                         </div>
-                        
+
                     </div>
                     <div class="form-group row">
                         <div class="col-3 offset-2">
@@ -35,11 +36,12 @@
                 <div class="bot">
                 </div>
                 <button onclick="goBack()">Exit</button>
+                <p class="sms">Free for 24 hrs then AED 11 / Week</p>
 
 
-                <p class="sms" style="font-weight: bold; font-size: 10px;">Terms and conditions</p>
+                <p class="sms" style="font-weight: bold; font-size: 14px;">Terms and conditions</p>
 
-                <p class="sms" style="font-weight: bold; font-size: 8px;">
+                <p class="sms" style="font-weight: bold; font-size: 12px;">
                     By clicking on the above subscribe button, you will agree on the below terms and conditions<br>
                     1. You will be start the paid subscription after the free period automatically<br>
                     2. No commitment, you can cancel your subscription at anytime by sending STOP to 3333<br>
