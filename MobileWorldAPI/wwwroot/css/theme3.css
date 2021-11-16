@@ -1,0 +1,306 @@
+
+/*-----------------------------------------------------------------------------------*/
+/*	CSS theme
+/*-----------------------------------------------------------------------------------*/
+
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+body {
+    margin-top: 0;
+    background-color: #fff;
+    font-family: 'Roboto Condensed', sans-serif;
+    overflow-x:hidden;
+    max-width:600px;
+    margin:0 auto;
+}
+h1 {
+    font-size: 32px;
+    line-height: 31px;
+    font-weight: bold;
+    text-align: center;
+    color: #DB2929;
+    margin: 0px;
+    padding: 10px;
+}
+.logo {
+    text-align: center;
+    background-color: #000;
+}
+.titular {
+    width: 100%;
+   background-color: rgba(255, 122, 3, 0.5);
+    padding:0px;
+    z-index:200;
+    position:absolute;
+    max-width: 600px;
+    margin:0 auto;
+    margin-top:350px;
+}
+.titular2 {
+    width: 100%;
+    margin:0 auto;
+    padding: 10px -10px 10px 0px;
+    z-index:200;
+    position:absolute;
+    max-width: 600px;
+    margin-top:450px;
+}
+.col-xs-12 {
+    padding: 0;
+}
+.cuerpo {
+    text-align: center;
+}
+.cuerpo img {
+    margin: auto;
+    height: auto;
+    margin: auto;
+    z-index:100;
+    position:relative;
+    max-width: 600px;
+}
+.cuerpo h2 {
+    font-weight: bold;
+}
+.container {
+    margin-top: 0px;
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+h2 {
+    font-size: 22px;
+    line-height: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #DB2929;
+    margin-top: 20px;
+    margin-bottom:0px;
+    padding: 0px;
+    text-shadow: 0 0 3px #000000;
+}
+/* FOOTER */
+footer {
+    font-size: 11px;
+    line-height: 13px;
+    left: 0;
+    text-align: justify;
+    padding-left:10px;
+    padding-right:10px;
+}
+footer a {
+    color: #888;
+}
+footer a:hover {
+    color: #333;
+}
+footer p {
+    color: #888;
+    padding: 0;
+}
+#enviar {
+    min-width: 220px;
+    padding: 12px 40px;
+}
+.row>h2 {
+    display: none;
+}
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+.txtprecio {
+    width: 100%;
+    text-align: center;
+    z-index: 9999;
+    top: 0px;
+    padding: 4px 0px;
+    font: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    color: #DB2929;
+    margin: 0 auto;
+}
+.txtprecio a {
+    font-size: 12px;
+    color: #DB2929;
+}
+.sms {
+    margin-top: 0px;
+    color:darkblue;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+input[type=text] {
+    width: 39%;
+    padding: 6px 20px;
+    margin-top:0px;
+    margin-bottom:10px;
+    border-radius: 4px;
+    font-size: 20px;
+    text-align: center;
+    border:2px solid #3386FF;
+    background-color:#DCE8F9;
+}
+a {
+    color:#D902FF;
+    font-size:12px;
+}
+.bot {margin: 0 auto;}
+.login {
+	margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    height: 46px;
+    width: 175px;
+    background-image:url("../Playbox_files/boton.png");
+}
+.login-submit {
+  /* border: 1px solid #3079ed; */
+	margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    /*height: 29px;
+    width: 125px;*/
+    height: 46px;
+    width: 175px;
+  background-image:url("../Playbox_files/boton.png");
+  background-size:contain
+}
+::-webkit-input-placeholdcebkit-input-placeholder { color: black; } /* WebKit */
+:-moz-placeholder { color: black; } /* Firefox 18- */
+::-moz-placeholder { color: black; } /* Firefox 19+ */
+:-ms-input-placeholder { color: black; } /* IE 10+ */
+
+/*  -------------------------------------------------------------
+  MEDIA QUERIES
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */  
+@media (max-width: 600px) {
+h1{
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: bold;
+    text-align: center;
+    color: darkblue;
+    margin:0px;
+    padding:0px;
+}
+h2 {
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: blue;
+    margin-top: 10px;
+    margin-bottom:0px;
+    padding: 0px;
+}
+.action {
+    width: 100%;
+    line-height: 18px;
+    font-size: 16px;
+}
+.container {
+    margin-top: 0px;
+}
+.bot {margin: 0 auto;}
+
+}
+.login {
+	margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    height: 74px;
+    width: 350px;
+    background-image:url("../Playbox_files/boton.png");
+}
+.login-submit {
+  /* border: 1px solid #3079ed; */
+	margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    height: 70px;
+    width: 215px;
+  background-image:url("../img/subscribe-button.jpg");
+  background-size:contain
+}
+input[type=text] {
+    width: 80%;
+    padding: 6px 20px;
+    margin-top:0px;
+    margin-bottom:10px;
+    box-sizing: border-box;
+    border-radius: 40px;
+    text-align: centerpx;
+    font-size: 20px;
+    text-align: centeius: 4px;
+    font-size: 20px;
+    text-align: cen
+}
+input[type=text] {
+    width: 50%;
+    padding: 6px 20px;
+    margin-top:0px;
+    margin-bottom:10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-size: 20px;
+    text-align: center;
+}
+.titular {
+    width: 100%;
+    background-color: rgba(38, 169, 251, 0.9);
+    padding:0px;
+    z-index:200;
+    position:absolute;
+    max-width: 600px;
+    margin:0 auto;
+    margin-top:170px;
+}
+.titular2 {
+    width: 100%;
+    margin:0 auto;
+    padding: 10px -10px 10px 0px;
+    z-index:200;
+    position:absolute;
+    max-width: 600px;
+    margin-top:225px;
+}
+}
+
+@media (max-width: 767px) {
+.txtprecio {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    z-index: 9999;
+    top: 0px;
+    padding: 4px 0px;
+    font: Verdana, Geneva, sans-serif;
+    font-size: 9px;
+    color: #DB2929;
+}
+.txtprecio a {
+    font-size: 9px;
+    color: #DB2929;
+}
+}
+
+/* Small Devices, .visible-sm-* */
+@media (min-width: 768px) and (max-width: 991px) {
+.txtprecio {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    z-index: 9999;
+    top: 0px;
+    padding: 4px 0px;
+    font: Verdana, Geneva, sans-serif;
+    font-size: 9px;
+    color: #DB2929;
+}
+.txtprecio a {
+    font-size: 9px;
+    color: #DB2929;
+}
+}
+
