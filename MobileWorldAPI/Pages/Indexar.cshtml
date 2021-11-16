@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
             <div class="cuerpo">
-                <a href="#">Englis</a>
-                <img src="@Model.BaseImg" style="width: 65%;">
+                 <p class="sms" style="font-weight: bold; font-size: 10px;"> <a href="/index">English</a></p>
+                <img src="@Model.BaseImg" style="width: 50%;">
                 <h2 ID="h2Number">أدخل رقمك</h2>
                 <p class="sms">مجانًا لمدة 24 ساعة ثم 11 درهمًا في الأسبوع</p>
                 <form method="post">
@@ -20,20 +20,14 @@
                             <span asp-validation-for="Msisdn"></span>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-3 offset-2">
+                    <div class="col-6 offset-3" style="height: 2rem;">
+                        <div class="col-md-2">
                             <input style="display:inline-block;" type="submit" value="" class="login login-submit form-control" />
                         </div>
                     </div>
                 </form>
 
-                <div id="inputnumber">
-                    <p class="sms" style="font-weight: bold; font-size: 18px;">
-                    </p>
-                </div>
-                <div class="bot">
-                </div>
-                <a href="#">Englis</a>
+                <p class="sms" style="font-weight: bold; font-size: 10px;"> <a href="/index">English</a></p>
                 <button onclick="goBack()">مخرج</button>
 
                 <p class="sms" style="font-weight: bold; font-size: 8px;">

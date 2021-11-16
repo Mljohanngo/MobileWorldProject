@@ -110,6 +110,7 @@ footer p {
 .row {
     margin-right: 0;
     margin-left: 0;
+    height: 1.5rem;
 }
 .txtprecio {
     width: 100%;
@@ -129,7 +130,7 @@ footer p {
 .sms {
     margin-top: 0px;
     color:darkblue;
-    font-size: 12px;
+    font-size: 15px;
     margin-bottom: 5px;
 }
 input[type=text] {
@@ -220,8 +221,8 @@ h1{
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    height: 65px;
-    width: 244px;
+    height: 35px;
+    width: 130px;
     background-image: url("../img/boton.png");
     background-size: contain;
     border-radius: 10px;
