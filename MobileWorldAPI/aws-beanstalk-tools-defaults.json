@@ -3,7 +3,7 @@
     "region" : "us-east-1",
     "configuration" : "Debug",
     "framework"     : "net5.0",
-    "self-contained" : true,
+    "self-contained" : false,
     "application"    : "MobileWorldAPI",
     "environment"    : "MobileWorldAPI-prod",
     "enable-xray"    : false,

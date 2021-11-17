@@ -21,7 +21,8 @@ namespace MobileWorldAPI.Pages
 
         [BindProperty]
         [Required(ErrorMessage = "Msisdn is required")]
-        public long Msisdn { get; set; }
+        //[RegularExpression(@"^(\+97[\s]{0,1}[\-]{0,1}[\s]{0,1}1|0)5(0|6|4)[\s]{0,1}[\-]{0,1}[\s]{0,1}[1-9]{1}[0-9]{6}$",ErrorMessage = "Please enter a valid Etisalat number")]
+        public string Msisdn { get; set; }
         public string BaseImg { get; set; }
         public IActionResult OnGet([FromRoute] int id = 0)
         {
@@ -41,6 +42,7 @@ namespace MobileWorldAPI.Pages
                     break;
             }
             clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
+
             return Page();
         }
 
