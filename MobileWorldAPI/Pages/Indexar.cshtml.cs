@@ -20,8 +20,11 @@ namespace MobileWorldAPI.Pages
         }
 
         [BindProperty]
-        [Required(ErrorMessage = "Msisdn is required")]
-        public long Msisdn { get; set; }
+        [Phone(ErrorMessage = "Please insert a valid number")]
+        [Required(ErrorMessage = "Number is required")]
+        [RegularExpression(@"^5(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        [Range(0, 9)]
+        public int Msisdn { get; set; }
         public string BaseImg { get; set; }
         public IActionResult OnGet([FromRoute] int id = 0)
         {
