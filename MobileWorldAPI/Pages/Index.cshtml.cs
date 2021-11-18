@@ -22,7 +22,7 @@ namespace MobileWorldAPI.Pages
         [BindProperty]
         [Phone(ErrorMessage = "Please insert a valid number")]
         [Required(ErrorMessage = "Number is required")]
-        [RegularExpression(@"^5(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        [RegularExpression(@"^(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         [Range(0, 9)]
         public int Msisdn { get; set; }
         public string BaseImg { get; set; }
