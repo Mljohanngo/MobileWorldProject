@@ -20,11 +20,11 @@ namespace MobileWorldAPI.Pages
         }
 
         [BindProperty]
-        [Phone(ErrorMessage = "Please insert a valid number")]
-        [Required(ErrorMessage = "Number is required")]
-        [RegularExpression(@"^(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
-        [Range(0, 9)]
-        public int Msisdn { get; set; }
+        //[Phone(ErrorMessage = "Please insert a valid number")]
+        //[Required(ErrorMessage = "Number is required")]
+        ////[RegularExpression(@"^(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        //[Range(8, 8, ErrorMessage = "Invalid Range")]
+        public string Msisdn { get; set; }
         public string BaseImg { get; set; }
         public IActionResult OnGet([FromRoute] int id = 0)
         {
@@ -68,7 +68,7 @@ namespace MobileWorldAPI.Pages
             }
             catch (Exception)
             {
-                return Page();
+                return Redirect("Index");
             }
         }
     }

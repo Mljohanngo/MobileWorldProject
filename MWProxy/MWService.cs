@@ -32,7 +32,7 @@ namespace MWProxy
 
         public async Task<SendPinResponseDto> SendPinAsync(SendPinRequestDto Request)
         {
-            Request.Action = _configuration.GetValue<string>("Method:SendPin:Action");
+            Request.Action = _configuration.GetValue<string>("MWConfig:Method:SendPin:Action");
             Request.ProductId = _configuration.GetValue<string>("MWConfig:Credentials:ProductId");
             Request.Language = _configuration.GetValue<string>("MWConfig:Credentials:Language");
             Request.ClientCorrelator = Guid.NewGuid().ToString();
@@ -46,6 +46,18 @@ namespace MWProxy
 
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<SendPinResponseDto>(payload);
+
+            if (response.ResponseCode != 0)
+            {
+                switch (response.ResponseCode)
+                {
+                    case -1:
+                        throw new Exception($"Error Number, code {response.ResponseCode}");
+                    default:
+                        throw new Exception($"Error, code {response.ResponseCode}");
+                }
+               
+            }
             return response;
         }
 
@@ -64,7 +76,7 @@ namespace MWProxy
 
         public async Task<ConfirmPinResponseDto> ConfirmPinAsync(ConfirmPinRequestDto Request)
         {
-            Request.Action = _configuration.GetValue<string>("Method:ConfirmPin:Action");
+            Request.Action = _configuration.GetValue<string>("MWConfig:Method:ConfirmPin:Action");
             Request.ProductId = _configuration.GetValue<string>("MWConfig:Credentials:ProductId");
             Request.PubId = _configuration.GetValue<string>("MWConfig:Credentials:PubId");
             var result = await _httpClient.PostAsJsonAsync("request", Request);
