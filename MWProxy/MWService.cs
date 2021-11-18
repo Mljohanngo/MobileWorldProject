@@ -87,6 +87,18 @@ namespace MWProxy
             }
             var payload = await result.Content.ReadAsStringAsync();
             var response = JsonSerializer.Deserialize<ConfirmPinResponseDto>(payload);
+
+            if (response.ResponseCode != 0)
+            {
+                switch (response.ResponseCode)
+                {
+                    case -1:
+                        throw new Exception($"Error Invalid Pin, code {response.ResponseCode}");
+                    default:
+                        throw new Exception($"Error, code {response.ResponseCode}");
+                }
+
+            }
             return response;
         }
 
