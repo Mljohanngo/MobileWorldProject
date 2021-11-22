@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,20 +10,20 @@ using MWProxy;
 
 namespace MobileWorldAPI.Pages
 {
-    public class PinModel : PageModel
+    public class PinarModel : PageModel
     {
         private readonly MWService _mWService;
         private string clientIpAddress;
-        public PinModel(MWService mWService)
+        public PinarModel(MWService mWService)
         {
             _mWService = mWService;
         }
 
         [BindProperty]
-        [Required(ErrorMessage = "PinResponse is required")]
+        [Required(ErrorMessage = "مطلوب استجابة PIN")]
         public SendPinResponseDto SendPinResponseDto { get; set; }
         [BindProperty]
-        [Required(ErrorMessage = "OTP is required")]
+        [Required(ErrorMessage = "مطلوب OTP")]
         public long Otp { get; set; }
         public IActionResult OnGet(SendPinResponseDto passedData)
         {
@@ -55,9 +55,7 @@ namespace MobileWorldAPI.Pages
                     PinCode = Otp.ToString(),
                     AdPartnerName = "MLCampaign"
                 });
-
-                return RedirectToPage("Welcome", confirmPINResponse);
-
+                return RedirectToPage("Welcomear", confirmPINResponse);
             }
             catch (Exception)
             {
