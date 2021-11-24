@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-   public class MWConfirmPin
+   public class MWConfirmPin : Base
    {
         public long SubscriptionId { get; set; }
         public string Action { get; set; }
