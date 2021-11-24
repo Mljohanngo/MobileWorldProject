@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data_Access.Context
 {
-    class MWDBContext : DbContext
+    public class MWDBContext : DbContext
     {
         public MWDBContext()
         {

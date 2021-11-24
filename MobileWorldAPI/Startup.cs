@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using
+using Data_Access.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace MobileWorldAPI
 {
@@ -39,6 +42,10 @@ namespace MobileWorldAPI
             services.AddHttpClient<MWService>();
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+            services.AddDbContext<MWDBContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MeConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
