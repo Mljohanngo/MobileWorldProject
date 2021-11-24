@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,20 +8,23 @@ using System.Threading.Tasks;
 
 namespace Data_Access.Context
 {
-    //class MWDBContext : DbContext
-    //{
-    //    public MWDBContext()
-    //    {
+    class MWDBContext : DbContext
+    {
+        public MWDBContext()
+        {
 
-    //    }
+        }
 
-    //    public MWDBContext(DbContextOptions<DemoWebinarDbContext> options)
-    //        : base(options)
-    //    {
+        public MWDBContext(DbContextOptions<MWDBContext> options)
+            : base(options)
+        {
 
-    //    }
+        }
 
-    //    public DbSet<Customer> Customers { get; set; }
-    //    public DbSet<Direction> Directions { get; set; }
-    //}
+        public DbSet<Subscription> Subscription { get; set; }
+        public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<MWSendPin> SendPin { get; set; }
+        public DbSet<MWConfirmPin> ConfirmPin { get; set; }
+    }
 }
