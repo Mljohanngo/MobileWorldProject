@@ -43,7 +43,7 @@ namespace MobileWorldAPI
                 .AddRazorRuntimeCompilation();
             services.AddDbContext<MWDBContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("MeConnection"));
+                options.UseMySQL(Configuration.GetConnectionString("MeConnection"));
             });
         }
 
