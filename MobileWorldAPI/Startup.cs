@@ -45,6 +45,10 @@ namespace MobileWorldAPI
             {
                 options.UseMySQL(Configuration.GetConnectionString("MeConnection"));
             });
+            services.AddDbContext<AffiliateDBContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("AffConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
