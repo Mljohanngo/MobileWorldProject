@@ -11,7 +11,7 @@
                 <h2 ID="h2Number"> لقد تم اشتراكك بنجاح في خدمة Megaplay. </h2>
                 <p class="sms"> لقد أرسلنا إليك رسالة تأكيد SMS تتضمن تفاصيل اشتراكك في سجلاتك. </p>
                 <p class="sms"> يرجى الاحتفاظ بهذه الرسالة للرجوع إليها في المستقبل. </p>
-                <p class="sms"> انقر <a href="http://megaplay.digi-vibe.com/"> هنا </a> للوصول إلى Megaplay. </p>
+                <p class="sms"> انقر <a href="http://megaplay.digi-vibe.com/" onclick="setCookie('approved', 'd0cdf547-0d79-44c8-b02a-bff63c108e4a', 7);"> هنا </a> للوصول إلى Megaplay. </p>
 
 
             </div>
@@ -38,6 +38,13 @@
 
          function goBack() {
             location.replace("https://www.w3schools.com");
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
     </script>
 }
