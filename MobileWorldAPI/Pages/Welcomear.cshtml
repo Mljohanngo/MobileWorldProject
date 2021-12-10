@@ -11,7 +11,7 @@
                 <h2 ID="h2Number"> لقد تم اشتراكك بنجاح في خدمة Megaplay. </h2>
                 <p class="sms"> لقد أرسلنا إليك رسالة تأكيد SMS تتضمن تفاصيل اشتراكك في سجلاتك. </p>
                 <p class="sms"> يرجى الاحتفاظ بهذه الرسالة للرجوع إليها في المستقبل. </p>
-                <p class="sms"> انقر <a href="http://megaplay.digi-vibe.com/" onclick="setCookie('approved', 'd0cdf547-0d79-44c8-b02a-bff63c108e4a', 7);"> هنا </a> للوصول إلى Megaplay. </p>
+                <p class="sms"> انقر <a href="https://megaplay.digi-vibe.com/" onclick="setCookie('approved', 'd0cdf547-0d79-44c8-b02a-bff63c108e4a', 7);"> هنا </a> للوصول إلى Megaplay. </p>
 
 
             </div>
@@ -46,5 +46,14 @@
         let expires = "expires="+ d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
+
+        window.onload = function () {
+            // Put your logic here. 
+            //alert("Onload "); 
+            let approved = getCookie("approved");
+            if (approved == "" || approved == null) {
+                //alert("Welcome again " + approved);
+                location.replace("https://uae.digi-vibe.com/");
+            }
     </script>
 }
