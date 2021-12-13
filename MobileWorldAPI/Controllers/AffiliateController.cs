@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace MobileWorldAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/uae/Affiliate")]
     [ApiController]
     public class AffiliateController : ControllerBase
     {
         [HttpGet]
-        [Route("Index")]
+        [Route("Subscribe/{service}")]
         public ActionResult Subscribe() 
         {
             // Logica del HIt y Subs en Pending
-            return Redirect("https://localhost:44393/Index");
+            return Redirect("https://uae.digi-vibe.com/index|");
         }
     }
 }
