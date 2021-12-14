@@ -16,7 +16,7 @@ namespace MobileWorldAPI.Controllers
         public ActionResult Subscribe() 
         {
             // Logica del HIt y Subs en Pending
-            return Redirect("https://uae.digi-vibe.com/index|");
+            return Redirect("https://uae.digi-vibe.com/index");
         }
     }
 }
