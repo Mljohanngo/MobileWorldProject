@@ -55,7 +55,9 @@ namespace MobileWorldAPI.Pages
                     PinCode = Otp.ToString(),
                     AdPartnerName = "MLCampaign"
                 });
+
                 return RedirectToPage("Welcomear", confirmPINResponse);
+
             }
             catch (Exception)
             {

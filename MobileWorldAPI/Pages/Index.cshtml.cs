@@ -22,7 +22,7 @@ namespace MobileWorldAPI.Pages
         [BindProperty]
         //[Phone(ErrorMessage = "Please insert a valid number")]
         [Required(ErrorMessage = "Number is required")]
-        [RegularExpression(@"^(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
         public IActionResult OnGet([FromRoute] int id = 0)
@@ -59,7 +59,7 @@ namespace MobileWorldAPI.Pages
                 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
-                    Msisdn = $"9715{Msisdn}",
+                    Msisdn = $"9715{Msisdn.Substring(2,8)}",
                     SourceIp = clientIpAddress,
                     Channel = "web",
                     AdPartnerName = "MLCampaign"
