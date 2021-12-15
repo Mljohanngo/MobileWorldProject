@@ -89,7 +89,7 @@ namespace MobileWorldAPI.Pages
                 var r = _MWContext.SaveChangesAsync();
                 
                 //return RedirectToPage("Welcome", confirmPINResponse);
-                return RedirectToPage("Welcome", subs);
+                return RedirectToPage("Welcomear", subs);
 
             }
             catch (Exception)
