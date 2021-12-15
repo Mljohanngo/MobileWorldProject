@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Data_Access.Context;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MWProxy;
@@ -14,9 +16,11 @@ namespace MobileWorldAPI.Pages
     {
         private readonly MWService _mWService;
         private string clientIpAddress;
-        public IndexModel(MWService mWService)
+        private readonly MWDBContext _MWContext;
+        public IndexModel(MWService mWService, MWDBContext mwContext)
         {
             _mWService = mWService;
+            _MWContext= mwContext;
         }
 
         [BindProperty]
@@ -51,6 +55,14 @@ namespace MobileWorldAPI.Pages
         {
             try
             {
+                Msisdn = $"9715{Msisdn.Substring(2,8)}";
+                var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
+
+                if(validateUser!=null)
+                {
+                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                }
+
                 if (!ModelState.IsValid)
                 {
                   return Page();
@@ -59,11 +71,33 @@ namespace MobileWorldAPI.Pages
                 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
-                    Msisdn = $"9715{Msisdn.Substring(2,8)}",
+                    Msisdn = Msisdn,
                     SourceIp = clientIpAddress,
                     Channel = "web",
                     AdPartnerName = "MLCampaign"
                 });
+
+                /*if(sendPINResponse.ResponseCode==0)
+                {
+                var clientCorrelator = _MWContext.Set<Subscription>().Where(p=>p.Id==1).FirstOrDefault();
+                var pinresult= new MWSendPin(){
+                    SubscriptionId=sendPINResponse.SubscriptionId,
+                    Action="1",
+                    Msisdn=sendPINResponse.Msisdn,
+                    ProductId="1",
+                    Language="en",
+                    ClientCorrelator="80",
+                    SourceIp=clientIpAddress,
+                    PubId="MLDG",
+                    Channel="web",
+                    AdPartnerName="test",
+                    HttpResponseCode=200,
+                    ResponseMessage=sendPINResponse.re
+                                                                                                                                                                           
+
+
+                }  
+                }*/
                 return RedirectToPage("Pin", sendPINResponse);
             }
             catch (Exception)

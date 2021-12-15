@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Data_Access.Context;
+using Entities;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,19 +12,21 @@ using MWProxy;
 namespace MobileWorldAPI.Pages
 {
     
-    public class IndexModelAr : PageModel
+    public class IndexarModel : PageModel
     {
         private readonly MWService _mWService;
         private string clientIpAddress;
-        public IndexModelAr(MWService mWService)
+        private readonly MWDBContext _MWContext;
+        public IndexarModel(MWService mWService, MWDBContext mwContext)
         {
             _mWService = mWService;
+            _MWContext= mwContext;
         }
 
         [BindProperty]
         
         [Required(ErrorMessage = "Number is required")]
-        [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "الرجاء إدخال رقم اتصالات صحيح")]
         
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
@@ -51,6 +55,14 @@ namespace MobileWorldAPI.Pages
         {
             try
             {
+                Msisdn = $"9715{Msisdn.Substring(2,8)}";
+                var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
+
+                if(validateUser!=null)
+                {
+                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                }
+
                 if (!ModelState.IsValid)
                 {
                   return Page();
@@ -60,11 +72,13 @@ namespace MobileWorldAPI.Pages
 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
-                    Msisdn = $"9715{Msisdn.Substring(2,8)}",
+                    Msisdn = Msisdn,
                     SourceIp = clientIpAddress,
                     Channel = "web",
                     AdPartnerName = "MLCampaign"
                 });
+
+                
                 return RedirectToPage("Pinar", sendPINResponse);
             }
             catch (Exception)
