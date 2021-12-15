@@ -1,0 +1,110 @@
+﻿@page "{id:int?}"
+@model MobileWorldAPI.Pages.WelcomebackModel
+@{
+
+}
+   <link rel="stylesheet" href="~/css/1theme5login.css" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
+            <div class="cuerpo">
+                <p class="sms">مرحبًا بك مرة أخرى في Megaplay</p>
+                <p class="sms" style="font-weight: bold; font-size: 18px;"> <a href="/Welcomeback" style="font-size:25px;">English</a></p>
+                <img src="@Model.BaseImg" style="width: 50%;">
+                <h2 ID="h2Number">أدخل رقمك لتسجيل الدخول</h2>
+
+                <form method="post">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group row">
+                        <div class="input-group">
+                            <div class="col-6 offset-3">
+                                <div class="input-group m-2">
+                                   <!--<div class="input-group-prepend">
+                                        <div class="input-group-text">05</div>
+                                    </div>-->
+                                    <input asp-for="Msisdn" class="form-control" placeholder="05xxxxxxxx" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <span asp-validation-for="Msisdn"></span>
+                            </div>
+                        </div>
+                        </div>
+                        <br />
+                        <div class="col-6 offset-3" style="height: 2rem;">
+                            <div>
+                                <input style="display:inline-block;" type="submit" value="" class="login login-submit form-control" />
+                            </div>
+                        </div>
+</form>
+                
+
+
+<br/>
+<br/>
+                <button onclick="goBack()">Exit</button>
+
+                
+
+
+            </div>
+            </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function OnSelect() {
+            var o = $("#seloper").val();
+            if (o == 5000) {
+                $("#h2Number").hide();
+                $("#inputnumber").hide();
+                $("#msisdnTXT").prop('required', false);
+
+            }
+            else {
+                $("#h2Number").show();
+                $("#inputnumber").show();
+                $("#msisdnTXT").prop('required', true);
+            }
+        }
+         function goBack() {
+            
+            location.replace("https://www.google.com");
+        }
+
+        function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+        }
+
+        function checkCookie() {
+        let approved = getCookie("approved");
+            if (approved != "") {
+            alert("Welcome again " + approved);
+            } 
+        }
+
+        window.onload = function(){
+        
+        //alert("Onload "); 
+        let approved = getCookie("approved");
+            if (approved != "") {
+            
+                location.replace("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+            }       
+    }
+    </script>
+}
