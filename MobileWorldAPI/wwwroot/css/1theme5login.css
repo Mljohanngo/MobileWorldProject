@@ -155,7 +155,7 @@ a {
     position: relative;
     height: 46px;
     width: 175px;
-    background-image: url("../img/login_orange.jpg");
+    background-image: url("../img/Log-In-Button2.png");
 }
 .login-submit {
   /* border: 1px solid #3079ed; */
@@ -166,7 +166,7 @@ a {
     width: 125px;*/
     height: 46px;
     width: 175px;
-  background-image:url("../img/login_orange.png");
+  background-image:url("../img/Log-In-Button2.png");
   background-size:contain
 }
 ::-webkit-input-placeholdcebkit-input-placeholder { color: black; } /* WebKit */
@@ -214,16 +214,16 @@ h1{
     position: relative;
     height: 35px;
     width: 129px;
-    background-image: url("../img/login_orange.png");
+    background-image: url("../img/Log-In-Button2.png");
 }
 .login-submit {
     border: 1px solid #ffffff;
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    height: 35px;
+    height: 60px;
     width: 100px;
-    background-image: url("../img/login_orange.png");
+    background-image: url("../img/Log-In-Button2.png");
     background-size: contain;
     border-radius: 10px;
 }
