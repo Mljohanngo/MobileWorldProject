@@ -65,7 +65,7 @@ namespace MobileWorldAPI.Pages
 
                 if (!ModelState.IsValid)
                 {
-                  return Page();
+                  return Redirect("Failure");
                 }
 
                 
@@ -102,7 +102,7 @@ namespace MobileWorldAPI.Pages
             }
             catch (Exception)
             {
-                return Redirect("Index");
+                return Redirect("Failure");
             }
         }
     }

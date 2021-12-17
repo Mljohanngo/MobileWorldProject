@@ -66,7 +66,7 @@ namespace MobileWorldAPI.Pages
 
                 if (!ModelState.IsValid)
                 {
-                  return Page();
+                  return Redirect("Failure");
                 }
 
                 

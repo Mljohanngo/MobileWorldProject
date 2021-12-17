@@ -47,7 +47,7 @@ namespace MobileWorldAPI.Pages
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return Redirect("Failure");
             }
             try
             {
@@ -95,7 +95,7 @@ namespace MobileWorldAPI.Pages
             catch (Exception)
             {
                 MessageRes = "Error entering the OTP";
-                return Page();
+                return Redirect("Failure");
             }
             
         }
