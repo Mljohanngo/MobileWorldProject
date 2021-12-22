@@ -16,11 +16,18 @@ namespace MobileWorldAPI.Pages
     {
         private readonly MWService _mWService;
         private string clientIpAddress;
+
+        private int mip_afc;
+
+        private string mip_prt;
         private readonly MWDBContext _MWContext;
-        public IndexModel(MWService mWService, MWDBContext mwContext)
+
+        private readonly AffiliateDBContext _Affilatectxt;
+        public IndexModel(MWService mWService, MWDBContext mwContext, AffiliateDBContext affContext)
         {
             _mWService = mWService;
             _MWContext= mwContext;
+            _Affilatectxt=affContext;
         }
 
         [BindProperty]
@@ -29,7 +36,7 @@ namespace MobileWorldAPI.Pages
         [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
-        public IActionResult OnGet([FromRoute] int id = 0)
+        public IActionResult OnGet([FromRoute] int id = 0,int afc=0, string prt=null)
         {
             switch (id)
             {
@@ -47,6 +54,9 @@ namespace MobileWorldAPI.Pages
                     break;
             }
             clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
+
+            mip_afc=afc;
+            mip_prt=prt;
 
             return Page();
         }
@@ -68,6 +78,20 @@ namespace MobileWorldAPI.Pages
                   return Redirect("Failure");
                 }
 
+                var create_hit=new TblReferralHit(){
+                    
+                    IdCampaign=123456,
+                    TransactionId="asdadastasdtttt",
+                    Msisdn=Msisdn,
+                    CreateDate = DateTime.Now,
+                    IpAddress="test",
+                    UserAgent="dummy",
+                    Promo=""
+                };
+
+                var datos=_Affilatectxt.TblReferralHits.Add(create_hit);
+                var r = _Affilatectxt.SaveChanges();
+
                 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
@@ -76,6 +100,8 @@ namespace MobileWorldAPI.Pages
                     Channel = "web",
                     AdPartnerName = "MLCampaign"
                 });
+
+                
 
                 /*if(sendPINResponse.ResponseCode==0)
                 {
@@ -98,7 +124,13 @@ namespace MobileWorldAPI.Pages
 
                 }  
                 }*/
+
+
                 return RedirectToPage("Pin", sendPINResponse);
+
+                
+
+                //return Redirect("Error");
             }
             catch (Exception)
             {
