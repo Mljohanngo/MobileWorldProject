@@ -13,10 +13,10 @@ namespace MobileWorldAPI.Controllers
     {
         [HttpGet]
         [Route("Subscribe/{service}")]
-        public ActionResult Subscribe() 
+        public ActionResult Subscribe([FromQuery] int mip_prt=0, string mip_afc=null ) 
         {
             // Logica del HIt y Subs en Pending
-            return Redirect("https://uae.digi-vibe.com/index");
+            return Redirect("https://uae.digi-vibe.com/index?prt="+mip_prt+"&afc="+mip_afc);
         }
     }
 }

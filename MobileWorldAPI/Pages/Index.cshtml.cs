@@ -17,9 +17,9 @@ namespace MobileWorldAPI.Pages
         private readonly MWService _mWService;
         private string clientIpAddress;
 
-        private int mip_afc;
+        private string mip_afc;
 
-        private string mip_prt;
+        private int mip_prt;
         private readonly MWDBContext _MWContext;
 
         private readonly AffiliateDBContext _Affilatectxt;
@@ -36,7 +36,7 @@ namespace MobileWorldAPI.Pages
         [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
-        public IActionResult OnGet([FromRoute] int id = 0,int afc=0, string prt=null)
+        public IActionResult OnGet([FromRoute] int id = 0,string afc="", int prt=0)
         {
             switch (id)
             {
@@ -61,8 +61,13 @@ namespace MobileWorldAPI.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost([FromRoute] string afc, int prt=0)
         {
+            clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
+
+            mip_afc=afc;
+            mip_prt=prt;
+
             try
             {
                 Msisdn = $"9715{Msisdn.Substring(2,8)}";
@@ -78,20 +83,21 @@ namespace MobileWorldAPI.Pages
                   return Redirect("Failure");
                 }
 
+                if(mip_prt!=0){
                 var create_hit=new TblReferralHit(){
                     
-                    IdCampaign=123456,
-                    TransactionId="asdadastasdtttt",
+                    IdCampaign=mip_prt,
+                    TransactionId=mip_afc,
                     Msisdn=Msisdn,
                     CreateDate = DateTime.Now,
-                    IpAddress="test",
-                    UserAgent="dummy",
+                    IpAddress=clientIpAddress,
+                    UserAgent=Request.Headers["User-Agent"].ToString(),
                     Promo=""
                 };
 
                 var datos=_Affilatectxt.TblReferralHits.Add(create_hit);
                 var r = _Affilatectxt.SaveChanges();
-
+                }
                 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
