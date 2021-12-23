@@ -61,7 +61,7 @@ namespace MobileWorldAPI.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost([FromRoute] string afc, int prt=0)
+        public async Task<IActionResult> OnPost([FromQuery] string afc=null, int prt=0)
         {
             clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
 
