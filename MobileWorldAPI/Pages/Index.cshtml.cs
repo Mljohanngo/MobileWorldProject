@@ -68,21 +68,10 @@ namespace MobileWorldAPI.Pages
             mip_afc=afc;
             mip_prt=prt;
 
-            try
-            {
-                Msisdn = $"9715{Msisdn.Substring(2,8)}";
-                var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
+            Msisdn = $"9715{Msisdn.Substring(2,8)}";
 
-                if(validateUser!=null)
-                {
-                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
-                }
 
-                if (!ModelState.IsValid)
-                {
-                  return Redirect("Failure");
-                }
-
+            try{
                 if(mip_prt!=0){
                 var create_hit=new TblReferralHit(){
                     
@@ -98,6 +87,27 @@ namespace MobileWorldAPI.Pages
                 var datos=_Affilatectxt.TblReferralHits.Add(create_hit);
                 var r = _Affilatectxt.SaveChanges();
                 }
+            }
+            catch (Exception)
+            {
+            return Page();
+            }
+
+            try
+            {
+                var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
+
+                if(validateUser!=null)
+                {
+                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                  return Redirect("Failure");
+                }
+
+                
                 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
