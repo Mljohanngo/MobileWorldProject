@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data Access\Data Access.csproj" />
+    <ProjectReference Include="..\Helper\Helper.csproj" />
     <ProjectReference Include="..\MWProxy\MWProxy.csproj" />
   </ItemGroup>
 

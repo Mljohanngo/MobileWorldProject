@@ -7,7 +7,7 @@ using Data_Access.Context;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MWProxy;
+using Service.MWProxy;
 
 namespace MobileWorldAPI.Pages
 {

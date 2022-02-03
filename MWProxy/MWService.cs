@@ -11,7 +11,7 @@ using System.Text.Json.Serialization;
 using DTO.MW;
 using System.Text.Json;
 
-namespace MWProxy
+namespace Service.MWProxy
 {
     public class MWService
     {

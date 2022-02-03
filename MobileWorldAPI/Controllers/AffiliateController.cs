@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Data_Access.Context;
+using DTO.Affiliates;
+using Entities;
+using Helper.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,12 +15,45 @@ namespace MobileWorldAPI.Controllers
     [ApiController]
     public class AffiliateController : ControllerBase
     {
+        private readonly AffiliateDBContext _AffilateDBContext;
+
+        public AffiliateController(AffiliateDBContext affContext)
+        {
+            _AffilateDBContext = affContext;
+        }
+
         [HttpGet]
         [Route("Subscribe/{service}")]
-        public ActionResult Subscribe([FromQuery] int mip_prt=0, string mip_afc=null ) 
+        public async Task<ActionResult> SubscribeAsync([FromQuery] AffiliateDto affiliateData)
         {
-            // Logica del HIt y Subs en Pending
-            return Redirect("https://uae.digi-vibe.com/index?prt="+mip_prt+"&afc="+mip_afc);
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var result = await _AffilateDBContext.Set<TblReferralHit>().AddAsync(new TblReferralHit
+                {
+                    IdCampaign = affiliateData.Mip_Prt,
+                    TransactionId = affiliateData.Mip_Afc,
+                    CreateDate = ConvertTime.toUAEDateTime(DateTime.UtcNow),
+                    IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244",
+                    UserAgent = Request.Headers["User-Agent"].ToString(),
+                    Promo = ""
+
+                });
+
+                await _AffilateDBContext.SaveChangesAsync();
+                affiliateData.Id_Hit = result.Entity.IdHit;
+
+                // Logica del HIt y Subs en Pending
+                return RedirectToPage("/Index", affiliateData);
+            }
+            catch (Exception)
+            {
+                return RedirectToPage("/Failure");
+            }
         }
     }
 }

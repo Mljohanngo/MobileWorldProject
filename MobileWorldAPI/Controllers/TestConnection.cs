@@ -1,7 +1,7 @@
 ﻿using DTO.MW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MWProxy;
+using Service.MWProxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Data_Access.Context;
+using DTO.Affiliates;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MWProxy;
+using Service.MWProxy;
 
 namespace MobileWorldAPI.Pages
 {
@@ -16,18 +17,14 @@ namespace MobileWorldAPI.Pages
     {
         private readonly MWService _mWService;
         private string clientIpAddress;
-
-        private string mip_afc;
-
-        private int mip_prt;
         private readonly MWDBContext _MWContext;
-
-        private readonly AffiliateDBContext _Affilatectxt;
+        private readonly AffiliateDBContext _AffilateDBContext;
+        private AffiliateDto _AffiliateData;
         public IndexModel(MWService mWService, MWDBContext mwContext, AffiliateDBContext affContext)
         {
             _mWService = mWService;
-            _MWContext= mwContext;
-            _Affilatectxt=affContext;
+            _MWContext = mwContext;
+            _AffilateDBContext = affContext;
         }
 
         [BindProperty]
@@ -36,7 +33,7 @@ namespace MobileWorldAPI.Pages
         [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
-        public IActionResult OnGet([FromRoute] int id = 0,string afc="", int prt=0)
+        public IActionResult OnGet(AffiliateDto passedData, [FromRoute] int id = 0)
         {
             switch (id)
             {
@@ -54,39 +51,35 @@ namespace MobileWorldAPI.Pages
                     break;
             }
             clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
-
-            mip_afc=afc;
-            mip_prt=prt;
+            _AffiliateData = passedData;
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPost([FromQuery] string afc=null, int prt=0)
+        public async Task<IActionResult> OnPost()
         {
-            clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
 
-            mip_afc=afc;
-            mip_prt=prt;
+
 
             Msisdn = $"9715{Msisdn.Substring(2,8)}";
 
 
             try{
-                if(mip_prt!=0){
-                var create_hit=new TblReferralHit(){
+                //if(mip_prt!=0){
+                //var create_hit=new TblReferralHit(){
                     
-                    IdCampaign=mip_prt,
-                    TransactionId=mip_afc,
-                    Msisdn=Msisdn,
-                    CreateDate = DateTime.Now,
-                    IpAddress=clientIpAddress,
-                    UserAgent=Request.Headers["User-Agent"].ToString(),
-                    Promo=""
-                };
+                //    IdCampaign=mip_prt,
+                //    TransactionId=mip_afc,
+                //    Msisdn=Msisdn,
+                //    CreateDate = DateTime.Now,
+                //    IpAddress=clientIpAddress,
+                //    UserAgent=Request.Headers["User-Agent"].ToString(),
+                //    Promo=""
+                //};
 
-                var datos=_Affilatectxt.TblReferralHits.Add(create_hit);
-                var r = _Affilatectxt.SaveChanges();
-                }
+                //var datos=_AffilateDBContext.TblReferralHits.Add(create_hit);
+                //var r = _AffilateDBContext.SaveChanges();
+                //}
             }
             catch (Exception)
             {
