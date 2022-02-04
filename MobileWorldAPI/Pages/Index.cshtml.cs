@@ -28,13 +28,17 @@ namespace MobileWorldAPI.Pages
         }
 
         [BindProperty]
-        //[Phone(ErrorMessage = "Please insert a valid number")]
-        [Required(ErrorMessage = "Number is required")]
-        [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        [RegularExpression(@"\d{8}$", ErrorMessage = "Please insert a valid number")]
+        [Required(ErrorMessage = "Your mobile number is required")]
+        [MaxLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
+        [MinLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
+        // [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         public string Msisdn { get; set; }
+        //public string Msisdn { get; set; }
         public string BaseImg { get; set; }
         public IActionResult OnGet(AffiliateDto passedData, [FromRoute] int id = 0)
         {
+
             switch (id)
             {
                 case 1:
@@ -50,8 +54,9 @@ namespace MobileWorldAPI.Pages
                     BaseImg = "img/landing1.png";
                     break;
             }
-            clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
-            _AffiliateData = passedData;
+
+            //TODO: Hanlde auto redirect for subscribed users
+            
 
             return Page();
         }
@@ -61,39 +66,41 @@ namespace MobileWorldAPI.Pages
 
 
 
-            Msisdn = $"9715{Msisdn.Substring(2,8)}";
+          //  Msisdn = $"9715{Msisdn.Substring(2,8)}";
 
 
-            try{
-                //if(mip_prt!=0){
-                //var create_hit=new TblReferralHit(){
-                    
-                //    IdCampaign=mip_prt,
-                //    TransactionId=mip_afc,
-                //    Msisdn=Msisdn,
-                //    CreateDate = DateTime.Now,
-                //    IpAddress=clientIpAddress,
-                //    UserAgent=Request.Headers["User-Agent"].ToString(),
-                //    Promo=""
-                //};
+            //try{
+            //    if (mip_prt != 0)
+            //    {
+            //        var create_hit = new TblReferralHit()
+            //        {
 
-                //var datos=_AffilateDBContext.TblReferralHits.Add(create_hit);
-                //var r = _AffilateDBContext.SaveChanges();
-                //}
-            }
-            catch (Exception)
-            {
-            return Page();
-            }
+            //            IdCampaign = mip_prt,
+            //            TransactionId = mip_afc,
+            //            Msisdn = Msisdn,
+            //            CreateDate = DateTime.Now,
+            //            IpAddress = clientIpAddress,
+            //            UserAgent = Request.Headers["User-Agent"].ToString(),
+            //            Promo = ""
+            //        };
+
+            //        var datos = _AffilateDBContext.TblReferralHits.Add(create_hit);
+            //        var r = _AffilateDBContext.SaveChanges();
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //return Page();
+            //}
 
             try
             {
-                var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
+                //var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn.ToString(0).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
 
-                if(validateUser!=null)
-                {
-                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
-                }
+                //if(validateUser!=null)
+                //{
+                //    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                //}
 
                 if (!ModelState.IsValid)
                 {
@@ -104,7 +111,7 @@ namespace MobileWorldAPI.Pages
                 
                 var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
-                    Msisdn = Msisdn,
+                    Msisdn = Msisdn.ToString(),
                     SourceIp = clientIpAddress,
                     Channel = "web",
                     AdPartnerName = "MLCampaign"

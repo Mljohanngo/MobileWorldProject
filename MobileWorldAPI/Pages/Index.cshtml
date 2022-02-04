@@ -1,8 +1,6 @@
 ﻿@page "{id:int?}"
 @model MobileWorldAPI.Pages.IndexModel
-@{
-
-}
+@{ }
 
 <div class="container">
     <div class="row">
@@ -19,29 +17,29 @@
                         <div class="input-group">
                             <div class="col-6 offset-3">
                                 <div class="input-group m-2">
-                                   <!--<div class="input-group-prepend">
-                                        <div class="input-group-text">05</div>
-                                    </div>-->
-                                    <input asp-for="Msisdn" class="form-control" placeholder="05xxxxxxxx" />
+                                    <!--<div class="input-group-prepend">
+                        <div class="input-group-text">05</div>
+                    </div>-->
+                                    <input asp-for="Msisdn" class="form-control" placeholder="97105-xxxxxxxx" />
+
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <span asp-validation-for="Msisdn"></span>
-                            </div>
                         </div>
+                    </div>
+                    <br />
+                    <div class="col-12"><span asp-validation-for="Msisdn"></span></div>
+                    <div class="col-12" style="height: 2.3rem;">
+                        <div>
+                            <input style="display:inline-block;" type="submit" value="" class="login login-submit form-control" />
                         </div>
-                        <br />
-                        <div class="col-6 offset-3" style="height: 2rem;">
-                            <div>
-                                <input style="display:inline-block;" type="submit" value="" class="login login-submit form-control" />
-                            </div>
-                        </div>
-</form>
+                    </div>
+                </form>
                 <p class="sms">Free for 24 hrs then AED 11 / Week</p>
 
 
 
                 <button onclick="goBack()">Exit</button>
+                <br />
 
                 <p class="sms" style="font-weight: bold; font-size: 12px;">
                     By clicking on the above subscribe button, you will agree on the below terms and conditions<br>
@@ -53,11 +51,16 @@
 
 
             </div>
-            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" /> 
+     }
+
     <script>
         function OnSelect() {
             var o = $("#seloper").val();
@@ -73,42 +76,42 @@
                 $("#msisdnTXT").prop('required', true);
             }
         }
-         function goBack() {
+        function goBack() {
             //window.history.back();
             location.replace("https://www.google.com");
         }
 
         function getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-            c = c.substring(1);
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
             }
-            if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-            }
-        }
-        return "";
+            return "";
         }
 
         function checkCookie() {
-        let approved = getCookie("approved");
+            let approved = getCookie("approved");
             if (approved != "") {
-            alert("Welcome again " + approved);
-            } 
+                alert("Welcome again " + approved);
+            }
         }
 
         /*window.onload = function(){
-        // Put your logic here. 
-        //alert("Onload "); 
+        // Put your logic here.
+        //alert("Onload ");
         let approved = getCookie("approved");
             if (approved != "") {
             //alert("Welcome again " + approved);
                 location.replace("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
-            }       
-    }*/
+            }
+}*/
     </script>
 }
