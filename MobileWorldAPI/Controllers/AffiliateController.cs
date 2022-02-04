@@ -46,6 +46,7 @@ namespace MobileWorldAPI.Controllers
 
                 await _AffilateDBContext.SaveChangesAsync();
                 affiliateData.Id_Hit = result.Entity.IdHit;
+                affiliateData.Ip_Address = result.Entity.IpAddress;
 
                 // Logica del HIt y Subs en Pending
                 return RedirectToPage("/Index", affiliateData);

@@ -18,5 +18,7 @@ namespace DTO.Affiliates
 
         public long Id_Hit { get; set; }
 
+        public string Ip_Address { get; set; }
+
     }
 }

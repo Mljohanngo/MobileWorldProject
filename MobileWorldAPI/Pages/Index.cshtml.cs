@@ -8,6 +8,7 @@ using DTO.Affiliates;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Service.MWProxy;
 
 namespace MobileWorldAPI.Pages
@@ -16,10 +17,9 @@ namespace MobileWorldAPI.Pages
     public class IndexModel : PageModel
     {
         private readonly MWService _mWService;
-        private string clientIpAddress;
         private readonly MWDBContext _MWContext;
         private readonly AffiliateDBContext _AffilateDBContext;
-        private AffiliateDto _AffiliateData;
+
         public IndexModel(MWService mWService, MWDBContext mwContext, AffiliateDBContext affContext)
         {
             _mWService = mWService;
@@ -36,7 +36,8 @@ namespace MobileWorldAPI.Pages
         public string Msisdn { get; set; }
         //public string Msisdn { get; set; }
         public string BaseImg { get; set; }
-        public IActionResult OnGet(AffiliateDto passedData, [FromRoute] int id = 0)
+
+        public IActionResult OnGet( [FromRoute] int id = 0)
         {
 
             switch (id)
@@ -61,94 +62,59 @@ namespace MobileWorldAPI.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(AffiliateDto passedData)
         {
-
-
-
-          //  Msisdn = $"9715{Msisdn.Substring(2,8)}";
-
-
-            //try{
-            //    if (mip_prt != 0)
-            //    {
-            //        var create_hit = new TblReferralHit()
-            //        {
-
-            //            IdCampaign = mip_prt,
-            //            TransactionId = mip_afc,
-            //            Msisdn = Msisdn,
-            //            CreateDate = DateTime.Now,
-            //            IpAddress = clientIpAddress,
-            //            UserAgent = Request.Headers["User-Agent"].ToString(),
-            //            Promo = ""
-            //        };
-
-            //        var datos = _AffilateDBContext.TblReferralHits.Add(create_hit);
-            //        var r = _AffilateDBContext.SaveChanges();
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //return Page();
-            //}
 
             try
             {
-                //var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn.ToString(0).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
-
-                //if(validateUser!=null)
-                //{
-                //    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
-                //}
-
                 if (!ModelState.IsValid)
                 {
-                  return Redirect("Failure");
+                    return Redirect("Failure");
                 }
 
-                
-                
-                var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
+                // User Exists and is Active
+                var isSubscribed = _MWContext.Set<Subscription>()
+                    .Where(p => p.Msisdn == String.Concat("9715", Msisdn) && p.Status == "ACTIVE")
+                    .OrderByDescending(p => p.Id)
+                    .FirstOrDefault();
+
+                if (isSubscribed != null)
                 {
-                    Msisdn = Msisdn.ToString(),
-                    SourceIp = clientIpAddress,
+                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                }
+
+                // Updating Hit
+
+                var updateHit = _AffilateDBContext.Set<TblReferralHit>()
+                    .Where(p => p.IdHit == passedData.Id_Hit).FirstOrDefault();
+
+                if (updateHit == null)
+                {
+                    return Redirect("Failure");
+                }
+
+                updateHit.Msisdn = String.Concat("9715", Msisdn);
+                _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
+                _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
+                await _AffilateDBContext.SaveChangesAsync();
+
+                var response = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
+                {
+                    Msisdn = updateHit.Msisdn,
+                    SourceIp = updateHit.IpAddress,
                     Channel = "web",
+                    //TODO: Add logic to handle different Partner Campaigns
                     AdPartnerName = "MLCampaign"
                 });
 
-                
 
-                /*if(sendPINResponse.ResponseCode==0)
-                {
-                var clientCorrelator = _MWContext.Set<Subscription>().Where(p=>p.Id==1).FirstOrDefault();
-                var pinresult= new MWSendPin(){
-                    SubscriptionId=sendPINResponse.SubscriptionId,
-                    Action="1",
-                    Msisdn=sendPINResponse.Msisdn,
-                    ProductId="1",
-                    Language="en",
-                    ClientCorrelator="80",
-                    SourceIp=clientIpAddress,
-                    PubId="MLDG",
-                    Channel="web",
-                    AdPartnerName="test",
-                    HttpResponseCode=200,
-                    ResponseMessage=sendPINResponse.re
-                                                                                                                                                                           
-
-
-                }  
-                }*/
-
-
-                return RedirectToPage("Pin", sendPINResponse);
+                return RedirectToPage("Pin", response);
 
                 
 
                 //return Redirect("Error");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Redirect("Failure");
             }
