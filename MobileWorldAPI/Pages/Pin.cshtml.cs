@@ -15,7 +15,6 @@ namespace MobileWorldAPI.Pages
     public class PinModel : PageModel
     {
         private readonly MWService _mWService;
-        private string clientIpAddress;
        
         private readonly MWDBContext _MWContext;
         public PinModel(MWService mWService, MWDBContext mwContext )
@@ -34,16 +33,14 @@ namespace MobileWorldAPI.Pages
         public string MessageRes { get; set; }
         public IActionResult OnGet(SendPinResponseDto passedData)
         {
-            clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
             if (passedData is null || !ModelState.IsValid)
             {
                 return RedirectToPage("Index");
             }
-            SendPinResponseDto = passedData;
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(SendPinResponseDto passedData)
         {
             if (!ModelState.IsValid)
             {
@@ -51,26 +48,18 @@ namespace MobileWorldAPI.Pages
             }
             try
             {
-                
+                SendPinResponseDto = passedData;
                 var confirmPINResponse = await _mWService.ConfirmPinAsync(new DTO.MW.ConfirmPinRequestDto
                 {
                     Msisdn = SendPinResponseDto.Msisdn,
                     SubscriptionId = SendPinResponseDto.SubscriptionId,
                     TransactionId = SendPinResponseDto.TransactionId,
-                    SourceIp = clientIpAddress,
+                    SourceIp = SendPinResponseDto.Ip,
                     Channel = "web",
                     PinCode = Otp.ToString(),
                     AdPartnerName = "MLCampaign"
                 });
 
-                /*if (confirmPINResponse.ResponseCode != 0)
-                {
-                    // Es un error
-                    MessageRes=confirmPINResponse.ErrorMessage;  
-                    return Page();
-                }*/
-                
-                //var url = _MWContext.Product.Where(p => p.Id == 1).FirstOrDefault();
                 var subs = new Subscription() {
                     CreateDate = DateTime.Now,
                     Msisdn = confirmPINResponse.Msisdn,
@@ -85,10 +74,10 @@ namespace MobileWorldAPI.Pages
                     ContentUrl = "https://megaplay.digi-vibe.com/"
 
                 };
-                var datos=_MWContext.Subscription.Add(subs);
+                var data=_MWContext.Subscription.Add(subs);
                 var r = _MWContext.SaveChangesAsync();
                 
-                //return RedirectToPage("Welcome", confirmPINResponse);
+
                 return RedirectToPage("Welcome", subs);
 
             }

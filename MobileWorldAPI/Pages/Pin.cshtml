@@ -1,7 +1,6 @@
 ﻿@page
 @model MobileWorldAPI.Pages.PinModel
-@{
-}
+@{ }
 
 
 <div class="container">
@@ -57,6 +56,11 @@
 </div>
 
 @section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
     <script>
         function OnSelect() {
             var o = $("#seloper").val();
@@ -72,7 +76,7 @@
                 $("#msisdnTXT").prop('required', true);
             }
         }
-         function goBack() {
+        function goBack() {
             //window.history.back();
             location.replace("https://www.google.com");
         }

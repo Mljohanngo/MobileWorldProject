@@ -83,7 +83,7 @@ namespace MobileWorldAPI.Pages
                     return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
                 }
 
-                // Updating Hit
+                // Getting current Hit
 
                 var updateHit = _AffilateDBContext.Set<TblReferralHit>()
                     .Where(p => p.IdHit == passedData.Id_Hit).FirstOrDefault();
@@ -93,10 +93,14 @@ namespace MobileWorldAPI.Pages
                     return Redirect("Failure");
                 }
 
+                // Updating Hit
+
                 updateHit.Msisdn = String.Concat("9715", Msisdn);
                 _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
                 _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
                 await _AffilateDBContext.SaveChangesAsync();
+
+                // Send Pin
 
                 var response = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
@@ -107,6 +111,25 @@ namespace MobileWorldAPI.Pages
                     AdPartnerName = "MLCampaign"
                 });
 
+                response.Ip = passedData.Ip_Address;
+
+                // Creating Send Pin Record
+
+                var sendPin = await _MWContext.Set<MWSendPin>().AddAsync(new MWSendPin
+                {
+                    Msisdn = response.Msisdn,
+                    SourceIp = response.Ip,
+                    Channel = "web",
+                    AdPartnerName = "MLCampaign",
+                    OpSubscriptionId = response.SubscriptionId,
+                    TrxID = response.TransactionId,
+                    ResultMessage = response.ResponseDescription.StatusMessage
+
+
+                });
+
+
+
 
                 return RedirectToPage("Pin", response);
 
@@ -114,7 +137,7 @@ namespace MobileWorldAPI.Pages
 
                 //return Redirect("Error");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Redirect("Failure");
             }

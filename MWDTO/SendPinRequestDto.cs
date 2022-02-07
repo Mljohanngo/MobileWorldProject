@@ -44,5 +44,7 @@ namespace DTO.MW
         [System.Text.Json.Serialization.JsonPropertyName("errorMessage")]
         public string ErrorMessage { get; set; }
 
+        public string Ip { get; set; }
+
     }
 }
