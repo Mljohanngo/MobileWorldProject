@@ -54,6 +54,12 @@ namespace MobileWorldAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<MWDBContext>();
+                context.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -73,6 +79,7 @@ namespace MobileWorldAPI
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+            
         }
     }
 }
