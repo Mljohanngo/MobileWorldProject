@@ -3,14 +3,16 @@ using System;
 using Data_Access.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data_Access.Migrations
 {
     [DbContext(typeof(MWDBContext))]
-    partial class MWDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220214002627_Normalize_Data_Base")]
+    partial class Normalize_Data_Base
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
