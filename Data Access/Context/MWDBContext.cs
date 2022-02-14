@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Data_Access.Configuration;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,5 +27,16 @@ namespace Data_Access.Context
         public DbSet<Product> Product { get; set; }
         public DbSet<MWSendPin> SendPin { get; set; }
         public DbSet<MWConfirmPin> ConfirmPin { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new SubscriptionConfig());
+            modelBuilder.ApplyConfiguration(new ProductConfig());
+            modelBuilder.ApplyConfiguration(new MWSendPinConfig());
+            modelBuilder.ApplyConfiguration(new MWConfirmPinConfig());
+        }
+
     }
 }
