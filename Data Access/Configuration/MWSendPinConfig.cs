@@ -11,6 +11,10 @@ namespace Data_Access.Configuration
         {
             builder.Property(p => p.Action).HasColumnType("varchar(2)");
 
+            builder.Property(p => p.Msisdn).HasColumnType("varchar(15)");
+
+            builder.Property(p => p.Action).HasColumnType("varchar(2)");
+
             builder.Property(p => p.ProductId).HasColumnType("varchar(3)");
 
             builder.Property(p => p.Language).HasColumnType("varchar(2)");
@@ -26,6 +30,8 @@ namespace Data_Access.Configuration
             builder.Property(p => p.TrxID).HasColumnType("varchar(60)");
 
             builder.Property(p => p.ResultMessage).HasColumnType("varchar(250)");
+
+            builder.Property(p => p.ResponseMessage).HasColumnType("varchar(250)");
 
             builder.HasIndex(i => new { i.OpSubscriptionId})
                 .HasDatabaseName("IDX_OpsubscriptionId");
