@@ -13,5 +13,7 @@ namespace Entities
         public string ServiceName { get; set; }
         public bool IsActive { get; set; }
         public long PartnerId { get; set; }
+
+        public string ContentnBaseUrl { get; set; }
     }
 }
