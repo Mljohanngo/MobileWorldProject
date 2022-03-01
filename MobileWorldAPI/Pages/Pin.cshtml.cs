@@ -60,7 +60,8 @@ namespace MobileWorldAPI.Pages
                     AdPartnerName = "MLCampaign"
                 });
 
-                var subs = new Subscription() {
+                var subs = new Subscription() 
+                {
                     CreateDate = DateTime.Now,
                     Msisdn = confirmPINResponse.Msisdn,
                     Key = 1,

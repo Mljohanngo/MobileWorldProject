@@ -136,7 +136,7 @@ namespace MobileWorldAPI.Pages
 
 
 
-                return RedirectToPage("Pin", response);
+                return RedirectToPage("Pinar", response);
 
 
 

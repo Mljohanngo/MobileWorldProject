@@ -8,21 +8,21 @@
     <div class="row">
         <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
             <div class="cuerpo">
-                <p class="sms">مجانًا لمدة 24 ساعة ثم 11 درهمًا في الأسبوع</p>
+                <p class="sms">مجانًا لمدة 24 ساعة ثم 3 دراهم / يوميًا</p>
                 <img src="img/landing1.png" style="width: 50%;">
                 <h2 ID="h2 Number">الرجاء إدخال رقم التعريف الشخصي الذي تلقيته لتفعيل اشتراكك </h2>
-
 
                 <form method="post">
                     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                     <div id="inputnumber" class="form-group row">
                         <div class="col-6 offset-3">
-                            <input asp-for="Otp" value="" class="form-control" placeholder="أدخل OTP الخاص بك" />
+                            <input asp-for="Otp" value="" class="form-control" placeholder="Enter your OTP" />
                             <span asp-validation-for="Otp"></span>
 
                         </div>
 
                     </div>
+                    <br />
                     <!--<div class="form-group row"> -->
                     <div class="col-6 offset-3" style="height: 2rem;">
                         <div>
@@ -38,7 +38,7 @@
                 <div class="bot">
                 </div>
                 <button onclick="goBack()">مخرج</button>
-                <p class="sms">مجانًا لمدة 24 ساعة ثم 11 درهمًا في الأسبوع</p>
+                <p class="sms">مجانًا لمدة 24 ساعة ثم 3 دراهم / يوميًا</p>
 
 
                 <p class="sms" style="font-weight: bold; font-size: 15px;">
@@ -55,6 +55,11 @@
 </div>
 
 @section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
     <script>
         function OnSelect() {
             var o = $("#seloper").val();
