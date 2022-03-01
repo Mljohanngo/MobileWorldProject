@@ -37,6 +37,7 @@ namespace Service.MWProxy
             Request.Language = _configuration.GetValue<string>("MWConfig:Credentials:Language");
             Request.ClientCorrelator = Guid.NewGuid().ToString();
             Request.PubId = _configuration.GetValue<string>("MWConfig:Credentials:PubId");
+            Console.WriteLine($"");
             var result = await _httpClient.PostAsJsonAsync("request", Request);
 
             if (!result.IsSuccessStatusCode)
