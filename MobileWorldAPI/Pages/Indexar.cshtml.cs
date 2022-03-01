@@ -2,41 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Data_Access.Context;
-using Entities;
 using System.Threading.Tasks;
+using Data_Access.Context;
+using DTO.Affiliates;
+using Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Service.MWProxy;
 
 namespace MobileWorldAPI.Pages
 {
-    
+
     public class IndexarModel : PageModel
     {
         private readonly MWService _mWService;
-        private string clientIpAddress;
-
-        private string mip_afc;
-
-        private int mip_prt;
         private readonly MWDBContext _MWContext;
+        private readonly AffiliateDBContext _AffilateDBContext;
 
-        private readonly AffiliateDBContext _Affilatectxt;
         public IndexarModel(MWService mWService, MWDBContext mwContext, AffiliateDBContext affContext)
         {
             _mWService = mWService;
-            _MWContext= mwContext;
-            _Affilatectxt=affContext;
+            _MWContext = mwContext;
+            _AffilateDBContext = affContext;
         }
 
         [BindProperty]
-        //[Phone(ErrorMessage = "Please insert a valid number")]
-        [Required(ErrorMessage = "Number is required")]
-        [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
+        [RegularExpression(@"\d{8}$", ErrorMessage = "Please insert a valid number")]
+        [Required(ErrorMessage = "Your mobile number is required")]
+        [MaxLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
+        [MinLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
-        public IActionResult OnGet([FromRoute] int id = 0,string afc="", int prt=0)
+        public AffiliateDto IndexState { get; set; }
+        public IActionResult OnGet(AffiliateDto passedData, [FromRoute] int id = 0)
         {
             switch (id)
             {
@@ -53,98 +53,92 @@ namespace MobileWorldAPI.Pages
                     BaseImg = "img/landing1.png";
                     break;
             }
-            clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
 
-            mip_afc=afc;
-            mip_prt=prt;
+            if (passedData != null
+                && HttpContext.Session.GetString("IndexState") == null)
+            {
+                HttpContext.Session.SetString("IndexState",
+                    $"Mip_Prt={passedData.Mip_Prt}" +
+                    $"&Mip_Afc={passedData.Mip_Afc}" +
+                    $"&Id_Hit={passedData.Id_Hit}" +
+                    $"&Ip_Address={passedData.Ip_Address}");
+            }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPost([FromQuery] string afc=null, int prt=0)
+        public async Task<IActionResult> OnPost(AffiliateDto passedData)
         {
-            clientIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "176.205.206.244";
-
-            mip_afc=afc;
-            mip_prt=prt;
-
-            Msisdn = $"9715{Msisdn.Substring(2,8)}";
-
-
-            try{
-                if(mip_prt!=0){
-                var create_hit=new TblReferralHit(){
-                    
-                    IdCampaign=mip_prt,
-                    TransactionId=mip_afc,
-                    Msisdn=Msisdn,
-                    CreateDate = DateTime.Now,
-                    IpAddress=clientIpAddress,
-                    UserAgent=Request.Headers["User-Agent"].ToString(),
-                    Promo=""
-                };
-
-                var datos=_Affilatectxt.TblReferralHits.Add(create_hit);
-                var r = _Affilatectxt.SaveChanges();
-                }
-            }
-            catch (Exception)
-            {
-            return Page();
-            }
 
             try
             {
-                var validateUser = _MWContext.Subscription.Where(p=>p.Msisdn==Msisdn).Where(p=>p.Status=="ACTIVE").SingleOrDefault();
+                if (!ModelState.IsValid)
+                {
+                    return Redirect("Failure");
+                }
 
-                if(validateUser!=null)
+                // User Exists and is Active
+                var isSubscribed = _MWContext.Set<Subscription>()
+                    .Where(p => p.Msisdn == String.Concat("9715", Msisdn) && p.Status == "ACTIVE")
+                    .OrderByDescending(p => p.Id)
+                    .FirstOrDefault();
+
+                if (isSubscribed != null)
                 {
                     return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
                 }
 
-                if (!ModelState.IsValid)
+                // Getting current Hit
+
+                var updateHit = _AffilateDBContext.Set<TblReferralHit>()
+                    .Where(p => p.IdHit == passedData.Id_Hit).FirstOrDefault();
+
+                if (updateHit == null)
                 {
-                  return Redirect("Failure");
+                    return Redirect("Failure");
                 }
 
-                
-                
-                var sendPINResponse = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
+                // Updating Hit
+
+                updateHit.Msisdn = String.Concat("9715", Msisdn);
+                _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
+                _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
+                await _AffilateDBContext.SaveChangesAsync();
+
+                // Send Pin
+
+                var response = await _mWService.SendPinAsync(new DTO.MW.SendPinRequestDto
                 {
-                    Msisdn = Msisdn,
-                    SourceIp = clientIpAddress,
+                    Msisdn = updateHit.Msisdn,
+                    SourceIp = updateHit.IpAddress,
                     Channel = "web",
+                    //TODO: Add logic to handle different Partner Campaigns
                     AdPartnerName = "MLCampaign"
                 });
 
-                
+                response.Ip = passedData.Ip_Address;
 
-                /*if(sendPINResponse.ResponseCode==0)
+                // Creating Send Pin Record
+
+                var sendPin = await _MWContext.Set<MWSendPin>().AddAsync(new MWSendPin
                 {
-                var clientCorrelator = _MWContext.Set<Subscription>().Where(p=>p.Id==1).FirstOrDefault();
-                var pinresult= new MWSendPin(){
-                    SubscriptionId=sendPINResponse.SubscriptionId,
-                    Action="1",
-                    Msisdn=sendPINResponse.Msisdn,
-                    ProductId="1",
-                    Language="en",
-                    ClientCorrelator="80",
-                    SourceIp=clientIpAddress,
-                    PubId="MLDG",
-                    Channel="web",
-                    AdPartnerName="test",
-                    HttpResponseCode=200,
-                    ResponseMessage=sendPINResponse.re
-                                                                                                                                                                           
+                    Msisdn = response.Msisdn,
+                    SourceIp = response.Ip,
+                    Channel = "web",
+                    AdPartnerName = "MLCampaign",
+                    OpSubscriptionId = response.SubscriptionId,
+                    TrxID = response.TransactionId,
+                    ResultMessage = response.ResponseDescription.StatusMessage
 
 
-                }  
-                }*/
+                });
 
 
-                return RedirectToPage("Pin", sendPINResponse);
 
-                
+
+                return RedirectToPage("Pin", response);
+
+
 
                 //return Redirect("Error");
             }

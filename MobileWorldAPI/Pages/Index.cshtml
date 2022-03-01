@@ -1,13 +1,16 @@
 ﻿@page "{id:int?}"
 @model MobileWorldAPI.Pages.IndexModel
-@{ }
+@using Microsoft.AspNetCore.Http
+@{ 
+    var c = HttpContext.Session.GetString("IndexState");
+}
 
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
             <div class="cuerpo">
-                <p class="sms">Free for 24 hrs then AED 11 / Week</p>
-                <p class="sms" style="font-weight: bold; font-size: 18px;"> <a href="/indexar" style="font-size:25px;">عربي</a></p>
+                <p class="sms">Free for 24 hrs then AED 3 / Daily</p>
+                <p class="sms" style="font-weight: bold; font-size: 18px;"> <a href="/Indexar?@HttpContext.Session.GetString("IndexState")" style="font-size:25px;">عربي</a></p>
                 <img src="@Model.BaseImg" style="width: 50%;">
                 <h2 ID="h2Number">Enter your number</h2>
 
@@ -18,7 +21,6 @@
                             <div class="col-6 offset-3">
                                 <div class="input-group m-2">
                                     <input asp-for="Msisdn" class="form-control" placeholder="97105-xxxxxxxx" onfocus="this.placeholder=''" onblur="this.placeholder='97105-xxxxxxxx'" />
-
                                 </div>
                             </div>
                         </div>
@@ -31,7 +33,7 @@
                         </div>
                     </div>
                 </form>
-                <p class="sms">Free for 24 hrs then AED 11 / Week</p>
+                <p class="sms">Free for 24 hrs then AED 3 / Daily</p>
 
 
 
@@ -55,8 +57,9 @@
 @section Scripts{
 
     @{
-        <partial name="_ValidationScriptsPartial" /> 
-     }
+        <partial name="_ValidationScriptsPartial" />
+
+    }
 
     <script>
         function OnSelect() {

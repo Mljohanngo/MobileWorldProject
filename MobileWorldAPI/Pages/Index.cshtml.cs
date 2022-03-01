@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Data_Access.Context;
 using DTO.Affiliates;
 using Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -32,14 +33,11 @@ namespace MobileWorldAPI.Pages
         [Required(ErrorMessage = "Your mobile number is required")]
         [MaxLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
         [MinLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
-        // [RegularExpression(@"^05(0|4|6)\d{7}$", ErrorMessage = "Please enter a valid Etisalat number")]
         public string Msisdn { get; set; }
-        //public string Msisdn { get; set; }
         public string BaseImg { get; set; }
-
-        public IActionResult OnGet( [FromRoute] int id = 0)
+        public AffiliateDto IndexState { get; set; }
+        public IActionResult OnGet(AffiliateDto passedData, [FromRoute] int id = 0)
         {
-
             switch (id)
             {
                 case 1:
@@ -56,8 +54,15 @@ namespace MobileWorldAPI.Pages
                     break;
             }
 
-            //TODO: Hanlde auto redirect for subscribed users
-            
+            if (passedData != null 
+                && HttpContext.Session.GetString("IndexState") == null)
+            {
+               HttpContext.Session.SetString("IndexState", 
+                   $"Mip_Prt={passedData.Mip_Prt}" +
+                   $"&Mip_Afc={passedData.Mip_Afc}" +
+                   $"&Id_Hit={passedData.Id_Hit}" +
+                   $"&Ip_Address={passedData.Ip_Address}");
+            }
 
             return Page();
         }
@@ -142,5 +147,6 @@ namespace MobileWorldAPI.Pages
                 return Redirect("Failure");
             }
         }
+
     }
 }
