@@ -29,10 +29,10 @@ namespace MobileWorldAPI.Pages
         }
 
         [BindProperty]
-        [RegularExpression(@"\d{8}$", ErrorMessage = "Please insert a valid number")]
+        [RegularExpression(@"\d{10}$", ErrorMessage = "Please insert a valid number")]
         [Required(ErrorMessage = "Your mobile number is required")]
-        [MaxLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
-        [MinLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
+        [MaxLength(10, ErrorMessage = "Please enter 10 digits of your mobile number")]
+        [MinLength(10, ErrorMessage = "Please enter 10 digits of your mobile number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
         public AffiliateDto IndexState { get; set; }
@@ -79,7 +79,7 @@ namespace MobileWorldAPI.Pages
 
                 // User Exists and is Active
                 var isSubscribed = _MWContext.Set<Subscription>()
-                    .Where(p => p.Msisdn == String.Concat("9715", Msisdn) && p.Status == "ACTIVE")
+                    .Where(p => p.Msisdn == String.Concat("9715", Msisdn.Substring(2)) && p.Status == "ACTIVE")
                     .OrderByDescending(p => p.Id)
                     .FirstOrDefault();
 
@@ -100,7 +100,7 @@ namespace MobileWorldAPI.Pages
 
                 // Updating Hit
 
-                updateHit.Msisdn = String.Concat("9715", Msisdn);
+                updateHit.Msisdn = String.Concat("9715", Msisdn.Substring(2));
                 _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
                 _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
                 await _AffilateDBContext.SaveChangesAsync();
