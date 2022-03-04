@@ -35,7 +35,7 @@ namespace MobileWorldAPI.Pages
         {
             if (passedData is null || !ModelState.IsValid)
             {
-                return RedirectToPage("Index");
+               return RedirectToPage("Index");
             }
             return Page();
         }
