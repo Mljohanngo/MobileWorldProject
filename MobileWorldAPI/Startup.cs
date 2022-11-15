@@ -34,7 +34,6 @@ namespace MobileWorldAPI
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             services.AddMemoryCache();
-            services.AddHttpClient<MWService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
