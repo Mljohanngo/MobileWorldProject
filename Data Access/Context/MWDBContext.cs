@@ -34,6 +34,7 @@ namespace Data_Access.Context
 
             modelBuilder.ApplyConfiguration(new SubscriptionConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());
+            modelBuilder.ApplyConfiguration(new TransactionConfig());
             modelBuilder.ApplyConfiguration(new MWSendPinConfig());
             modelBuilder.ApplyConfiguration(new MWConfirmPinConfig());
         }
