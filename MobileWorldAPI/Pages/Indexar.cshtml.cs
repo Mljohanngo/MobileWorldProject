@@ -85,7 +85,7 @@ namespace MobileWorldAPI.Pages
 
                 if (isSubscribed != null)
                 {
-                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                    return Redirect("https://digitalboxonline.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
                 }
 
                 // Getting current Hit

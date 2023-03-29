@@ -132,7 +132,7 @@ namespace Data_Access.Migrations
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "Id", "AppName", "ContentBaseUrl", "CreateDate", "IsActive", "Key", "LandingPageBaseUrl", "PartnerId", "ServiceName" },
-                values: new object[] { 1L, "megaplay", "https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b", new DateTime(2022, 11, 24, 21, 32, 47, 88, DateTimeKind.Local).AddTicks(8945), true, 0, "http://uae.digi-vibe.com/", 900L, "MegaPlay" });
+                values: new object[] { 1L, "megaplay", "https://digitalboxonline.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b", new DateTime(2022, 11, 24, 21, 32, 47, 88, DateTimeKind.Local).AddTicks(8945), true, 0, "http://uae.digi-vibe.com/", 900L, "MegaPlay" });
 
             migrationBuilder.CreateIndex(
                 name: "IDX_Msisdn_CreateDate",

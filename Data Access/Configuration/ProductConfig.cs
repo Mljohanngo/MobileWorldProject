@@ -24,7 +24,7 @@ namespace Data_Access.Configuration
                 IsActive = true,
                 PartnerId = 900,
                 CreateDate = DateTime.Now,
-                ContentBaseUrl = "https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b",
+                ContentBaseUrl = "https://digitalboxonline.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b",
                 LandingPageBaseUrl = "http://uae.digi-vibe.com/"
             }); 
 

@@ -218,7 +218,7 @@ namespace Data_Access.Migrations
                         {
                             Id = 1L,
                             AppName = "megaplay",
-                            ContentBaseUrl = "https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b",
+                            ContentBaseUrl = "https://digitalboxonline.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b",
                             CreateDate = new DateTime(2022, 11, 24, 21, 32, 47, 88, DateTimeKind.Local).AddTicks(8945),
                             IsActive = true,
                             Key = 0,
