@@ -217,15 +217,18 @@ h1{
     background-image: url("../img/boton.png");
 }
 .login-submit {
-    border: 1px solid #ffffff;
+    border: 1px solid darkorange;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     height: 35px;
     width: 130px;
-    background-image: url("../img/boton.png");
     background-size: contain;
     border-radius: 10px;
+    background-color: darkorange;
+    color: whitesmoke;
+    font-size: 21px;
+    padding: unset;
 }
 
 input[type=text] {

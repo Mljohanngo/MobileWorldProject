@@ -93,17 +93,19 @@ namespace MobileWorldAPI.Pages
                 var updateHit = _AffilateDBContext.Set<TblReferralHit>()
                     .Where(p => p.IdHit == passedData.Id_Hit).FirstOrDefault();
 
-                if (updateHit == null)
-                {
-                    return Redirect("Failure");
-                }
-
                 // Updating Hit
 
                 updateHit.Msisdn = String.Concat("971", Msisdn);
                 _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
                 _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
                 await _AffilateDBContext.SaveChangesAsync();
+
+                if (updateHit == null)
+                {
+                    return Redirect("Failure");
+                }
+
+
 
                 // Send Pin
 

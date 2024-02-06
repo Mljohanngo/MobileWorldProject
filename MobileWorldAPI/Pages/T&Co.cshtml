@@ -1,0 +1,40 @@
+﻿@page
+@model MobileWorldAPI.Pages.T_CoModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-lg-12 col-md-12  col-sm-12 col-xs-12">
+            <div class="cuerpo">
+                <p><a href="/T&Coar?" style="font-size:25px;">عربي</a></p>
+                <p class="sms" style="font-weight: bold; font-size: 12px;">
+                    MEGAPLAY <BR>
+                    •	Enjoy your Free trial For 24 hours<BR>
+                    •	You will start the paid subscription after the free period automatically AED 3 per day<BR>
+                    •	The free trial is valid only for new subscribers<BR>
+                    •	No commitment, you can cancel your subscription at anytime by sending: C MegaD to 1692.<BR>
+                    •	To get support, please contact: support@digi-vibe.com<BR>
+                    •	Please make sure that your browser is not using any 3rd-party blocking technologies and you have a healthy Internet connection for swift access to the content.<BR>
+                </p>
+                <button onclick="goBack()">Exit</button>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+
+<script>
+    function goBack() {
+        //window.history.back();
+        location.replace("https://uae.digi-vibe.com/");
+        }
+</script>
+}
