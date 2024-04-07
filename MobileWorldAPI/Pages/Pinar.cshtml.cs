@@ -72,7 +72,7 @@ namespace MobileWorldAPI.Pages
                     LastSuccessfulRenew = DateTime.Now,
                     IdOperator = 2501,
                     EventSource = "WEB",
-                    ContentUrl = "https://megaplay.digi-vibe.com/"
+                    ContentUrl = "https://digitalboxonline.com/"
 
                 };
                 var data = _MWContext.Subscription.Add(subs);

@@ -34,19 +34,20 @@ namespace MobileWorldAPI
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
             services.AddMemoryCache();
-            services.AddHttpClient<MWService>();
             services.AddControllers();
+            services.AddSingleton<MWService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MobileWorldAPI", Version = "v1" });
             });
-            // Inyect Mobile World Http Client 
+            // Inject Mobile World Http Client 
             services.AddHttpClient<MWService>();
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
             services.AddDbContext<MWDBContext>(options =>
             {
-                options.UseMySQL(Configuration.GetConnectionString("MeConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("MeConnection"));
+                //options.UseMySQL(Configuration.GetConnectionString("MeConnection"));
             });
             services.AddDbContext<AffiliateDBContext>(options =>
             {

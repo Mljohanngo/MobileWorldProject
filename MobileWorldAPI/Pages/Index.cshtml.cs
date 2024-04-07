@@ -29,10 +29,10 @@ namespace MobileWorldAPI.Pages
         }
 
         [BindProperty]
-        [RegularExpression(@"\d{8}$", ErrorMessage = "Please insert a valid number")]
+        [RegularExpression(@"\d{9}$", ErrorMessage = "Please insert a valid number")]
         [Required(ErrorMessage = "Your mobile number is required")]
-        [MaxLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
-        [MinLength(8, ErrorMessage = "Please enter 8 digits of your mobile number")]
+        [MaxLength(9, ErrorMessage = "Please enter 9 digits of your mobile number")]
+        [MinLength(9, ErrorMessage = "Please enter 9 digits of your mobile number")]
         public string Msisdn { get; set; }
         public string BaseImg { get; set; }
         public AffiliateDto IndexState { get; set; }
@@ -79,13 +79,13 @@ namespace MobileWorldAPI.Pages
 
                 // User Exists and is Active
                 var isSubscribed = _MWContext.Set<Subscription>()
-                    .Where(p => p.Msisdn == String.Concat("9715", Msisdn) && p.Status == "ACTIVE")
+                    .Where(p => p.Msisdn == String.Concat("971", Msisdn) && p.Status == "ACTIVE")
                     .OrderByDescending(p => p.Id)
                     .FirstOrDefault();
 
                 if (isSubscribed != null)
                 {
-                    return Redirect("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                    return Redirect("https://digitalboxonline.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
                 }
 
                 // Getting current Hit
@@ -93,17 +93,19 @@ namespace MobileWorldAPI.Pages
                 var updateHit = _AffilateDBContext.Set<TblReferralHit>()
                     .Where(p => p.IdHit == passedData.Id_Hit).FirstOrDefault();
 
+                // Updating Hit
+
+                updateHit.Msisdn = String.Concat("971", Msisdn);
+                _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
+                _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
+                await _AffilateDBContext.SaveChangesAsync();
+
                 if (updateHit == null)
                 {
                     return Redirect("Failure");
                 }
 
-                // Updating Hit
 
-                updateHit.Msisdn = String.Concat("9715", Msisdn);
-                _AffilateDBContext.Set<TblReferralHit>().Attach(updateHit);
-                _AffilateDBContext.Entry(updateHit).State = EntityState.Modified;
-                await _AffilateDBContext.SaveChangesAsync();
 
                 // Send Pin
 

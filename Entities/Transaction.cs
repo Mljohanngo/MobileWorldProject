@@ -8,10 +8,13 @@ namespace Entities
 {
    public class Transaction : Base
    {
-        public char Type { get; set; }
-        public string Status { get; set; }
-        public decimal Amount { get; set; }
-        public long SubscriptionId { get; set; }
-        public int Key { get; set; }
+        public string TransactionId { get; set; }
+        public string Msisdn { get; set; }  
+        public int ProductId { get; set; }
+        public string BillType { get; set; }
+        public decimal BillAmount { get; set; }
+        public string KeyWord { get; set; }
+        public string Channel { get; set; }
+
     }
 }

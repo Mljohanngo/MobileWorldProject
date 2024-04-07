@@ -20,7 +20,10 @@
                         <div class="input-group">
                             <div class="col-6 offset-3">
                                 <div class="input-group m-2">
-                                    <input asp-for="Msisdn" class="form-control" placeholder="XX XXX XXXXX" onfocus="this.placeholder=''" onblur="this.placeholder='XX XXX XXXXX'" />
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+971</span>
+                                    </div>
+                                    <input asp-for="Msisdn" class="form-control" placeholder="XXX XXXXX" onfocus="this.placeholder=''" onblur="this.placeholder='XXX XXXXX'" />
                                 </div>
                             </div>
                         </div>
@@ -29,7 +32,7 @@
                     <div class="col-12"><span asp-validation-for="Msisdn"></span></div>
                     <div class="col-12" style="height: 2.3rem;">
                         <div>
-                            <input style="display:inline-block;" type="submit" value="" class="login login-submit form-control" />
+                            <input style="display:inline-block;" type="submit" value="SUBSCRIBE" class="login login-submit form-control" />
                         </div>
                     </div>
                 </form>
@@ -41,11 +44,15 @@
                 <br />
 
                 <p class="sms" style="font-weight: bold; font-size: 12px;">
-                    By clicking on the above subscribe button, you will agree on the below terms and conditions<br>
-                    1. You will start the paid subscription after the free period automatically<br>
-                    2. No commitment, you can cancel your subscription at anytime by sending C mega to 1692<br>
-                    3. To get support, please contact support@digi-vibe.com <br>
-                    4. The free trial is valid only for new subscribers
+                    By clicking on the above subscribe button, you will agree on the below terms and conditions:<br>
+
+                    •	Enjoy your Free trial For 24 hours<br>
+                    •	You will start the paid subscription after the free period automatically AED 3 per day<br>
+                    •	The free trial is valid only for new subscribers<br>
+                    •	No commitment, you can cancel your subscription at anytime by sending: C MegaD to 1692.<br>
+                    •	To get support, please contact: support@digi-vibe.com<br>
+                    •	Please make sure that your browser is not using any 3rd-party blocking technologies and you have a healthy Internet connection for swift access to the content.
+
                 </p>
 
 
@@ -110,7 +117,7 @@
         let approved = getCookie("approved");
             if (approved != "") {
             //alert("Welcome again " + approved);
-                location.replace("https://megaplay.digi-vibe.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
+                location.replace("https://digitalboxonline.com/?sugid=cd01de3a-e5ae-434c-b926-ec127d1cde3b");
             }
 }*/
     </script>
